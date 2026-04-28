@@ -13,7 +13,7 @@
   --bg-light: #f4f7f5;
   --text-gray: #555;
   --transition: all 0.3s ease;
-}
+} 
 
 * {
   margin: 0;
@@ -102,9 +102,9 @@ button {
 
 .nav-link {
   padding: 7px 14px;
-  font-weight: 500;
-  color: #64748b;
-  font-size: 0.9rem;
+  font-weight: 600;
+  color: #5a6e7e;
+  font-size: .95rem;
   border-radius: 8px;
   transition: var(--transition);
 }
@@ -126,12 +126,15 @@ button {
   border: 1px solid #e2e8f0;
   padding: 10px 20px;
   border-radius: 12px;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--secondary-color);
   background: transparent;
   transition: var(--transition);
 }
 
+.btn-auth i{
+  font-weight: 900;
+}
 .btn-auth:hover {
   border-color: var(--primary-color);
   color: var(--primary-color);
@@ -150,14 +153,14 @@ button {
 @media (max-width: 992px) {
   .nav-menu {
     position: fixed;
-    top: -100%;
-    right: 0;
+    top: 70px;
+    right: -100%;
     width: 100%;
-    height: fit-content;
+    height: 90vh;
     background: rgb(242, 245, 242);
     flex-direction: column;
     padding: 15px 20px;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid rgb(240, 236, 236);
     gap: 0px;
     transition: 0.4s ease;
     align-items: flex-start;
@@ -165,7 +168,6 @@ button {
 
   .nav-menu.open {
     right: 0;
-    top: 65px;
   }
 
   .nav-toggle {
@@ -312,12 +314,12 @@ button {
 .badge-float {
   position: absolute;
   background: white;
-  padding: 12px 18px;
+  padding: 5px 10px;
   border-radius: 16px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .badge-garde {
@@ -331,8 +333,8 @@ button {
 }
 
 .icon-box {
-  width: 40px;
-  height: 40px;
+  width: 20px;
+  height: 20px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -343,12 +345,12 @@ button {
 
 .badge-text span {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.5rem;
   color: #94a3b8;
 }
 
 .badge-text strong {
-  font-size: 0.9rem;
+  font-size: 0.6rem;
   color: var(--black);
 }
 
@@ -424,12 +426,13 @@ button {
   width: 100%;
   padding: 15px 20px;
   border-radius: 12px;
-  border: 1px solid #f0f0f0;
+  border: 2px solid #f0f0f0;
   background-color: #f8fafc;
-  appearance: none;
-  font-size: 0.95rem;
+  /* appearance: none; */
+  font-size: 1rem;
   color: #64748b;
   cursor: pointer;
+  font-weight: 800px;
   outline: none;
   transition: all 0.2s ease;
 }
@@ -482,11 +485,26 @@ button {
 
 /* Mobile Responsive */
 @media (max-width: 768px) {
+  .search-section {
+  padding: 40px 0 80px 0;
+  margin: auto;
+  width: 100%;
+  position: relative;
+
+  
+  z-index: 10;
+  margin-top: -40px; /* Pour faire remonter un peu sur la hero */
+}
+
+  .search-section .container .search-header-badge{
+font-size: 12px;
+padding: 8px 12px;
+  }
   .search-grid {
     grid-template-columns: 1fr;
   }
   .search-card {
-    padding: 30px 20px;
+    padding: 15px 20px;
     margin: 0 10px;
   }
   .search-title {
@@ -709,7 +727,7 @@ button {
 .steps-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
+  gap: 28px;
 }
 
 .step-card {
@@ -804,7 +822,7 @@ button {
 
 .cta-card {
   position: relative;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: linear-gradient(135deg, #2B8A4E 0%, #2B8A4E 100%);
   border-radius: 30px;
   padding: 80px 40px;
   text-align: center; /* Centre tous les éléments texte */
@@ -1005,7 +1023,7 @@ button {
   transform: translateY(-5px);
   background: white;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
-  border-color: #10b981; /* Vert Pharma24 */
+  border-color: #2B8A4E; /* Vert Pharma24 */
 }
 
 /* --- EN-TÊTE DE LA CARTE --- */
@@ -1120,7 +1138,7 @@ button {
 
 .faq-item summary:hover {
   background-color: #f8fafc;
-  color: #10b981; /* Couleur primaire */
+  color: #2B8A4E; /* Couleur primaire */
 }
 
 .faq-item summary i {
@@ -1132,7 +1150,7 @@ button {
 /* Animation de l'icône quand c'est ouvert */
 .faq-item[open] summary i {
   transform: rotate(180deg);
-  color: #10b981;
+  color: #2B8A4E;
 }
 
 .faq-content {
@@ -1498,6 +1516,264 @@ button {
 
 
 
+/* --- PAGE CONTACT (PHARMA24) --- */
+.contact-section {
+  padding: 60px 0;
+  background-color: var(--white);
+}
+
+.contact-header {
+  text-align: left;
+  margin-bottom: 35px;
+}
+
+.contact-header h1 {
+  font-size: 32px;
+  color: var(--secondary-color);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.contact-header p {
+  color: var(--text-gray);
+  font-size: 15px;
+}
+
+/* Grille principale adaptée */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 25px;
+  align-items: start;
+}
+
+/* Cartes Style Bento Compact */
+.contact-info-card, 
+.contact-form-card {
+  background: var(--white);
+  padding: 30px;
+  border-radius: 18px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+}
+
+/* Info Items (Colonne Gauche) */
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.info-icon {
+  width: 42px;
+  height: 42px;
+  background: var(--bg-light); /* Utilisation de ton fond clair */
+  color: var(--primary-color);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.info-text span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.info-text p {
+  font-weight: 700;
+  color: var(--secondary-color);
+  font-size: 15px;
+}
+
+/* Bouton Appel Direct */
+.btn-call {
+  width: 100%;
+  padding: 12px;
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-call:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+/* Formulaire (Colonne Droite) */
+.contact-form-card h3 {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.input-group {
+  margin-bottom: 12px;
+}
+
+.input-group input, 
+.input-group textarea {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1px solid #e5e7eb;
+  background: var(--bg-light);
+  outline: none;
+  font-size: 14px;
+  color: var(--secondary-color);
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+.input-group input:focus, 
+.input-group textarea:focus {
+  border-color: var(--primary-color);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(43, 138, 78, 0.1);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary-color);
+  color: var(--white);
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-submit:hover {
+  filter: brightness(1.1);
+}
+
+/* RESPONSIVE */
+@media (max-width: 850px) {
+  .contact-grid {
+    grid-template-columns: 1fr; /* Passage sur une seule colonne */
+  }
+  
+  .contact-header {
+    text-align: center;
+  }
+
+  .contact-info-card, 
+  .contact-form-card {
+    padding: 20px;
+  }
+}
+
+
+
+.scan-container {
+  padding: 60px 0;
+  min-height: 80vh;
+}
+
+.scan-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+  text-align: center;
+}
+
+/* Style du lecteur de la bibliothèque */
+#reader {
+  border: none !important;
+  border-radius: 15px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+#reader__scan_region video {
+  border-radius: 15px;
+}
+
+.scanner-wrapper {
+  position: relative;
+}
+
+.btn-stop-scan {
+  width: 100%;
+  padding: 14px;
+  background-color: #ef4444; /* Rouge comme ta capture */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.scan-hint {
+  font-size: 14px;
+  color: var(--text-gray);
+  margin-top: 10px;
+}
+
+/* Carte de résultat */
+.result-card {
+  animation: fadeIn 0.3s ease;
+}
+
+.result-box {
+  background: var(--bg-light);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  word-break: break-all;
+  font-family: monospace;
+}
+
+.btn-retry {
+  background: none;
+  border: none;
+  color: var(--text-gray);
+  text-decoration: underline;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.info-alert {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--primary-color);
+  font-weight: 600;
+  background: var(--bg-light);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 
 
 
@@ -1696,3 +1972,44 @@ button {
     max-width: 100%;
   }
 }
+
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 45px;
+  height: 45px;
+  background-color: #2B8A4E; /* La couleur de ton icône */
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+.scroll-to-top:hover {
+  background-color: #000; 
+  transform: translateY(-5px); 
+}
+
+.scroll-to-top i {
+  font-size: 20px;
+  font-weight: bold;
+  transform: rotate(-90deg);
+}
+
+/* Optionnel : Masquer sur mobile si trop encombrant */
+@media (max-width: 768px) {
+  .scroll-to-top {
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+  }
+}
+

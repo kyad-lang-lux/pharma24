@@ -20,10 +20,17 @@ export default function RegisterPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card">
+      <div className="auth-card" style={{ marginTop: "-10px", marginBottom: "40px"}}>
         <div className="auth-logo">
           <div className="logo-icon">
-            <i className='bx bx-plus-medical'></i>
+            {/* <i className='bx bx-plus-medical'></i> */}
+
+            <svg  xmlns="http://www.w3.org/2000/svg" width={24} height={24} 
+fill={"currentColor"} viewBox={"0 0 24 24"}>
+{/* Boxicons v3.0.8 https://boxicons.com | License  https://docs.boxicons.com/free */}
+<path d="M21 7.99h-5V3c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v4.99H3c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h5V21c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-5.01h5c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1m-1 6h-5c-.55 0-1 .45-1 1V20h-4v-5.01c0-.55-.45-1-1-1H4v-4h5c.55 0 1-.45 1-1V4h4v4.99c0 .55.45 1 1 1h5z"></path>
+</svg>
+
           </div>
         </div>
         
@@ -46,7 +53,7 @@ export default function RegisterPage() {
             <div className="input-field-wrapper">
               <input 
                 type="email" 
-                placeholder="pharmacie@email.com" 
+                placeholder="votrepharmacie@gmail.com" 
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required 
@@ -105,7 +112,9 @@ export default function RegisterPage() {
         <p className="auth-footer">
           Déjà un compte ? <Link href="/connexion">Connectez-vous</Link>
         </p>
+
       </div>
+      
     </div>
   );
 }

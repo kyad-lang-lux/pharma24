@@ -284,7 +284,7 @@ export default function HomePage() {
                 <i className="fa-solid fa-location-dot"></i>
                 Voir la carte
               </Link>
-            </div>
+            </div> 
 
             <div className="hero-features">
               <div className="feature-item">
@@ -305,7 +305,7 @@ export default function HomePage() {
           {/* Image et Badges Flottants */}
           <div className="hero-image-wrapper">
             <img
-              src="/img/img1.png"
+              src="/img/ima2.jpg"
               alt="Pharmacien servant un client au Bénin"
               className="main-hero-img"
             />
@@ -342,8 +342,8 @@ export default function HomePage() {
       <section className="search-section">
         <div className="container">
           <div className="search-card">
-            <div className="search-header-badge">Recherche rapide</div>
-            <h2 className="search-title">Où cherchez-vous une pharmacie ?</h2>
+            <div className="search-header-badge"> Recherche rapide </div>
+            <h2 className="search-title">Trouver une pharmacie de votre zone ?</h2>
 
             <div className="search-grid">
               {/* Département */}
@@ -503,7 +503,7 @@ export default function HomePage() {
       </p>
     </div>
     <div className="feature-image">
-      <img src="/img/img2.png" alt="Réduisez les files d'attente" />
+      <img src="/img/ima3.jpg" alt="Réduisez les files d'attente" />
     </div>
   </div>
 </section>
@@ -512,7 +512,7 @@ export default function HomePage() {
 <section className="feature-block reverse">
   <div className="container feature-grid">
     <div className="feature-image">
-      <img src="/img/img3.png" alt="Trouvez la pharmacie" />
+      <img src="/img/ima2.jpg" alt="Trouvez la pharmacie" />
     </div>
     <div className="feature-text">
       <div className="feature-icon-box">
@@ -541,7 +541,7 @@ export default function HomePage() {
       </p>
     </div>
     <div className="feature-image">
-      <img src="/img/img4.png" alt="Contacts à portée de main" />
+      <img src="/img/ima2.jpg" alt="Contacts à portée de main" />
     </div>
   </div>
 </section>
@@ -778,6 +778,14 @@ export default function HomePage() {
       </details>
     </div>
   </div>
+
+
+
+  {/* Bouton Retour en haut */}
+<div className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+  {/* <i className='bx bx-shape-triangle'></i> */}
+  <i className="fa-solid fa-play triangle-up"></i>
+</div>
 </section>
 
 
