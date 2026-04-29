@@ -39,7 +39,7 @@ export default function ContactPage() {
               </div>
               <div className="info-text">
                 <span>Email</span>
-                <p>contact@pharma24.bj</p>
+                <p>contact24pharma@gmail.com</p>
               </div>
             </div>
 
@@ -60,6 +60,15 @@ export default function ContactPage() {
   className="btn-call"
 >
   <i className='bx bxl-whatsapp'></i> Contacter maintenant
+</a>
+
+   <a
+  href="mailto:contact24pharma@gmail.com"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn-call"
+>
+  <i className="fa-solid fa-envelope"></i> Envoyer un message
 </a>
           </div>
 

@@ -62,7 +62,7 @@ fill={"currentColor"} viewBox={"0 0 24 24"}>
               </div>
               <div className="footer-contact-item">
                 <i className='bx bx-envelope'></i>
-                <span>contact@pharma24.bj</span>
+                <span> contact24pharma@gmail.com</span>
               </div>
             </div>
           </div>

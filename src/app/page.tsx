@@ -324,7 +324,7 @@ export default function HomePage() {
             {/* Badge WhatsApp */}
             <div className="badge-float badge-whatsapp">
               <div className="icon-box">
-                <img src="/whatsapp.png" alt="WA" width="30" />
+                <img src="/img/whatsapp.jpg" alt="WA" width="30" />
               </div>
               <div className="badge-text">
                 <span>Commande</span>
@@ -512,7 +512,7 @@ export default function HomePage() {
 <section className="feature-block reverse">
   <div className="container feature-grid">
     <div className="feature-image">
-      <img src="/img/ima2.jpg" alt="Trouvez la pharmacie" />
+      <img src="/img/ima5.jpg" alt="Trouvez la pharmacie" />
     </div>
     <div className="feature-text">
       <div className="feature-icon-box">
@@ -541,7 +541,7 @@ export default function HomePage() {
       </p>
     </div>
     <div className="feature-image">
-      <img src="/img/ima2.jpg" alt="Contacts à portée de main" />
+      <img src="/img/ima4.jpg" alt="Contacts à portée de main" />
     </div>
   </div>
 </section>
