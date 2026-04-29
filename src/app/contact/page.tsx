@@ -19,7 +19,7 @@ export default function ContactPage() {
               </div>
               <div className="info-text">
                 <span>Téléphone</span>
-                <p>+229 XX XX XX XX</p>
+                <p>+229 0190814119</p>
               </div>
             </div>
 
@@ -29,7 +29,7 @@ export default function ContactPage() {
               </div>
               <div className="info-text">
                 <span>WhatsApp</span>
-                <p>+229 XX XX XX XX</p>
+                <p>+229 0190814119</p>
               </div>
             </div>
 

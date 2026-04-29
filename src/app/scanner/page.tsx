@@ -1,45 +1,70 @@
 "use client";
-import { useEffect, useState } from "react";
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { useEffect, useState, useRef } from "react";
+import { Html5Qrcode } from "html5-qrcode";
 
 export default function ScanPage() {
   const [scanResult, setScanResult] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
+  const scannerRef = useRef<Html5Qrcode | null>(null);
 
-  useEffect(() => {
-    let scanner: Html5QrcodeScanner;
+  const startScanner = async () => {
+    setScanResult(null);
+    setIsScanning(true);
 
-    if (isScanning) {
-      scanner = new Html5QrcodeScanner(
-        "reader",
-        {
-          fps: 10,
-          qrbox: { width: 250, height: 250 },
-          aspectRatio: 1.0,
-        },
-        /* verbose= */ false
-      );
+    // Un léger délai pour s'assurer que la div 'reader' est bien dans le DOM
+    setTimeout(async () => {
+      const html5QrCode = new Html5Qrcode("reader");
+      scannerRef.current = html5QrCode;
 
-      scanner.render(
-        (decodedText) => {
-          setScanResult(decodedText);
-          setIsScanning(false);
-          scanner.clear(); // Arrête la caméra après détection
-        },
-        (error) => {
-          // Gestion silencieuse des erreurs de lecture continue
-        }
-      );
-    }
+      const config = {
+        fps: 10,
+        qrbox: { width: 250, height: 250 },
+      };
 
-    return () => {
-      if (scanner) {
-        scanner.clear().catch((error) => console.error("Failed to clear scanner", error));
+      try {
+        // 'environment' force la caméra arrière sur smartphone
+        await html5QrCode.start(
+          { facingMode: "environment" },
+          config,
+          (decodedText) => {
+            setScanResult(decodedText);
+            stopScanner();
+          },
+          () => { /* Erreurs de scan silencieuses */ }
+        );
+      } catch (err) {
+        console.error("Erreur caméra:", err);
+        setIsScanning(false);
       }
-    };
-  }, [isScanning]);
+    }, 100);
+  };
 
-  // Fonction pour vérifier si le résultat est un lien URL
+  const stopScanner = async () => {
+    if (scannerRef.current) {
+      try {
+        await scannerRef.current.stop();
+        scannerRef.current.clear();
+      } catch (err) {
+        console.log("Scanner déjà arrêté");
+      }
+    }
+    setIsScanning(false);
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const imageFile = e.target.files[0];
+      const html5QrCode = new Html5Qrcode("reader");
+      
+      try {
+        const decodedText = await html5QrCode.scanFile(imageFile, true);
+        setScanResult(decodedText);
+      } catch (err) {
+        alert("Aucun code détecté sur cette image.");
+      }
+    }
+  };
+
   const isURL = (str: string) => {
     try {
       new URL(str);
@@ -54,29 +79,44 @@ export default function ScanPage() {
       <div className="container-small">
         <div className="contact-header">
           <h1>Scanner de médicaments</h1>
-          <p>Scannez le code-barres ou QR code d'un médicament pour obtenir ses informations.</p>
+          <p>Scannez un code ou importez une photo pour obtenir les informations.</p>
         </div>
 
         <div className="scan-card">
           {!isScanning && !scanResult && (
-            <button className="btn-submit" onClick={() => setIsScanning(true)}>
-              <i className="bx bx-camera"></i> Lancer le scanner
-            </button>
+            <div className="scan-actions">
+              <button className="btn-submit" onClick={startScanner}>
+                <i className="bx bx-camera"></i> Ouvrir la caméra
+              </button>
+              
+              <div className="file-upload-wrapper">
+                <label htmlFor="file-input" className="btn-file-label">
+                  <i className="bx bx-image-add"></i> Scanner une image
+                </label>
+                <input 
+                  id="file-input"
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleFileChange} 
+                  style={{ display: 'none' }}
+                />
+              </div>
+            </div>
           )}
 
           {isScanning && (
             <div className="scanner-wrapper">
-              <div id="reader"></div>
-              <button className="btn-stop-scan" onClick={() => setIsScanning(false)}>
+              <div id="reader" style={{ width: '100%' }}></div>
+              <button className="btn-stop-scan" onClick={stopScanner}>
                 <i className="bx bx-stop-circle"></i> Arrêter le scanner
               </button>
-              <p className="scan-hint">Pointez la caméra vers le code du médicament</p>
+              <p className="scan-hint">La caméra arrière est activée</p>
             </div>
           )}
 
           {scanResult && (
             <div className="result-card">
-              <h3>Résultat du scan</h3>
+              <h3>Résultat de l'analyse</h3>
               <div className="result-box">
                 <p>{scanResult}</p>
               </div>
@@ -91,11 +131,14 @@ export default function ScanPage() {
                 </div>
               )}
 
-              <button className="btn-retry" onClick={() => { setScanResult(null); setIsScanning(true); }}>
+              <button className="btn-retry" onClick={startScanner}>
                 Scanner à nouveau
               </button>
             </div>
           )}
+          
+          {/* Div cachée nécessaire pour le traitement des fichiers images */}
+          <div id="reader" style={{ display: isScanning ? 'block' : 'none' }}></div>
         </div>
       </div>
     </main>

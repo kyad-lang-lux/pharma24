@@ -1776,6 +1776,31 @@ padding: 8px 12px;
 
 
 
+.scan-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.btn-file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  background-color: var(--bg-light);
+  color: var(--secondary-color);
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-file-label:hover {
+  background-color: #e2e8f0;
+  border-color: var(--primary-color);
+}
 
 
 
