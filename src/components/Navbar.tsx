@@ -29,6 +29,8 @@ fill={"currentColor"} viewBox={"0 0 24 24"}>
           <div className="logo-text">
             Pharma<span>24</span>
           </div>
+
+         
         </Link>
 
         {/* Bouton Hamburger Mobile */}
