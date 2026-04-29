@@ -264,9 +264,9 @@ export default function HomePage() {
             </div>
 
             <h1>
-              Une pharmacie <span className="green">de</span> <br />
-              <span className="green">garde</span> en quelques <br />
-              secondes.
+              Une pharmacie  <br />
+              <span className="green"> de garde</span> en quelques secondes. 
+              
             </h1>
 
             <p className="hero-description">

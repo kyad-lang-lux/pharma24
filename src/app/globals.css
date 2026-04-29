@@ -361,7 +361,7 @@ button {
 @media (max-width: 992px) {
   .hero { padding: 25px 0; }
   .hero-container { flex-direction: column; text-align: center; }
-  .hero-content h1 { font-size: 2.1rem; }
+  .hero-content h1 { font-size: 2.3rem; }
   .hero-description { margin: 0 auto 20px auto; }
   .hero-actions { flex-direction: column; width: 100%; }
   .hero-actions .btn-primary, .hero-actions .btn-secondary { width: 100%; justify-content: center; }
