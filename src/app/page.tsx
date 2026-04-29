@@ -252,12 +252,32 @@ export default function HomePage() {
   );
   const currentVille = currentCommune?.villes.find((v) => v.nom === selVille);
 
+  useEffect(() => {
+  const observerOptions = {
+    threshold: 0.15 // Déclenche l'animation quand 15% de l'élément est visible
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("active");
+      }
+    });
+  }, observerOptions);
+
+  // On cible tous les éléments ayant la classe .reveal
+  const revealElements = document.querySelectorAll(".reveal");
+  revealElements.forEach((el) => observer.observe(el));
+
+  return () => observer.disconnect(); // Nettoyage
+}, []);
+
   return (
     <main>
       <section className="hero">
         <div className="container hero-container">
           {/* Contenu Texte */}
-          <div className="hero-content">
+          <div className="hero-content reveal" >
             <div className="hero-badge">
               <i className="fa-solid fa-star-of-life"></i>
               🇧🇯 Pharmacies de garde au Bénin
@@ -303,7 +323,7 @@ export default function HomePage() {
           </div>
 
           {/* Image et Badges Flottants */}
-          <div className="hero-image-wrapper">
+          <div className="hero-image-wrapper reveal">
             <img
               src="/img/ima2.jpg"
               alt="Pharmacien servant un client au Bénin"
@@ -339,7 +359,7 @@ export default function HomePage() {
    <br />
    
   
-      <section className="search-section">
+      <section className="search-section reveal">
         <div className="container">
           <div className="search-card">
             <div className="search-header-badge"> Recherche rapide </div>
@@ -435,10 +455,10 @@ export default function HomePage() {
       </section>
 
       {/* Section Statistiques */}
-<section className="stats-section">
+<section className="stats-section reveal">
   <div className="container stats-grid">
     
-    <div className="stat-card">
+    <div className="stat-card reveal reveal-delay-1">
       <div className="stat-icon-wrapper">
         <i className="fa-solid fa-location-dot"></i>
       </div>
@@ -448,7 +468,7 @@ export default function HomePage() {
       </div>
     </div>
 
-    <div className="stat-card">
+    <div className="stat-card reveal reveal-delay-1">
       <div className="stat-icon-wrapper">
         <i className="fa-solid fa-users"></i>
       </div>
@@ -458,7 +478,7 @@ export default function HomePage() {
       </div>
     </div>
 
-    <div className="stat-card">
+    <div className="stat-card reveal reveal-delay-1">
       <div className="stat-icon-wrapper">
         <i className="fa-solid fa-clock"></i>
       </div>
@@ -468,7 +488,7 @@ export default function HomePage() {
       </div>
     </div>
 
-    <div className="stat-card">
+    <div className="stat-card reveal reveal-delay-1">
       <div className="stat-icon-wrapper">
         <i className="fa-solid fa-star"></i>
       </div>
@@ -482,7 +502,7 @@ export default function HomePage() {
 </section>
 
 {/* Section Pourquoi Pharma24 - Titre */}
-<section className="features-intro">
+<section className="features-intro reveal">
   <span className="badge-light">Pourquoi Pharma24 ?</span>
   <h2>Les problèmes que nous résolvons</h2>
   <p>Une solution pensée pour les patients du Bénin, simple et accessible à tous.</p>
@@ -509,7 +529,7 @@ export default function HomePage() {
 </section>
 
 {/* Bloc 2 : Trouver la pharmacie (Image à gauche) */}
-<section className="feature-block reverse">
+<section className="feature-block reverse reveal">
   <div className="container feature-grid">
     <div className="feature-image">
       <img src="/img/ima5.jpg" alt="Trouvez la pharmacie" />
@@ -547,7 +567,7 @@ export default function HomePage() {
 </section>
 
 
-<section className="how-it-works">
+<section className="how-it-works reveal">
   <div className="container">
     <div className="section-header">
       <span className="badge-light">Étapes simples</span>
@@ -557,17 +577,17 @@ export default function HomePage() {
 
     <div className="steps-grid">
       {/* Étape 1 */}
-      <div className="step-card">
+      <div className="step-card reveal reveal-delay-1">
         <div className="step-number">01</div>
         <div className="step-icon">
           <i className="fa-solid fa-magnifying-glass-location"></i>
         </div>
         <h4>Recherchez</h4>
-        <p>Sélectionnez votre zone pour trouver les pharmacies de garde ouvertes.</p>
+        <p>Sélectionnez votre zone(département, commune, ville, quartier) pour trouver les pharmacies de garde ouvertes.</p>
       </div>
 
       {/* Étape 2 */}
-      <div className="step-card">
+      <div className="step-card reveal reveal-delay-1">
         <div className="step-number">02</div>
         <div className="step-icon">
           <i className="fa-brands fa-whatsapp"></i>
@@ -577,7 +597,7 @@ export default function HomePage() {
       </div>
 
       {/* Étape 3 */}
-      <div className="step-card">
+      <div className="step-card reveal reveal-delay-1">
         <div className="step-number">03</div>
         <div className="step-icon">
           <i className="fa-solid fa-truck-medical"></i>
@@ -592,7 +612,7 @@ export default function HomePage() {
 
 
 
-<section className="cta-section">
+<section className="cta-section reveal">
   <div className="container">
     <div className="cta-card">
       <div className="cta-content">
@@ -629,7 +649,7 @@ export default function HomePage() {
   </div>
 </section>
 
-<section className="testimonials-section">
+<section className="testimonials-section reveal">
   <div className="container">
     <div className="section-header">
       <span className="badge-light">Témoignages</span>
