@@ -78,8 +78,8 @@ export default function ScanPage() {
     <main className="scan-container">
       <div className="container-small">
         <div className="contact-header">
-          <h1>Scanner de médicaments</h1>
-          <p>Scannez un code ou importez une photo pour obtenir les informations.</p>
+          <h1 style={{ textAlign: 'center' }}>Scanner de médicaments</h1>
+          <p style={{ textAlign: 'center' }} >Scannez un code ou importez une photo pour obtenir les informations.</p>
         </div>
 
         <div className="scan-card">

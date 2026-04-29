@@ -19,7 +19,7 @@ export default function ContactPage() {
               </div>
               <div className="info-text">
                 <span>Téléphone</span>
-                <p>+229 0190814119</p>
+                <p>+229 01 48 52 29 26</p>
               </div>
             </div>
 
@@ -29,7 +29,7 @@ export default function ContactPage() {
               </div>
               <div className="info-text">
                 <span>WhatsApp</span>
-                <p>+229 0190814119</p>
+                <p>+229 01 48 52 29 26</p>
               </div>
             </div>
 
@@ -53,9 +53,14 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <button className="btn-call">
-              <i className='bx bx-phone'></i> Appeler maintenant
-            </button>
+            <a
+  href="https://wa.me/2290148522926"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="btn-call"
+>
+  <i className='bx bxl-whatsapp'></i> Contacter maintenant
+</a>
           </div>
 
           {/* Colonne Droite : Formulaire */}

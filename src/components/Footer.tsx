@@ -18,7 +18,7 @@ fill={"currentColor"} viewBox={"0 0 24 24"}>
 <path d="M21 7.99h-5V3c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v4.99H3c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h5V21c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-5.01h5c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1m-1 6h-5c-.55 0-1 .45-1 1V20h-4v-5.01c0-.55-.45-1-1-1H4v-4h5c.55 0 1-.45 1-1V4h4v4.99c0 .55.45 1 1 1h5z"></path>
 </svg>
               </div>
-              <div className="logo-text">
+              <div className="logo-text" style={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#000' }}>
                 Pharma<span>24</span>
               </div>
             </div>
@@ -58,7 +58,7 @@ fill={"currentColor"} viewBox={"0 0 24 24"}>
               </div>
               <div className="footer-contact-item">
                 <i className='bx bx-phone'></i>
-                <span>+229 XX XX XX XX</span>
+                <span>+229 01 48 52 29 26</span>
               </div>
               <div className="footer-contact-item">
                 <i className='bx bx-envelope'></i>

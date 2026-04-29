@@ -76,9 +76,9 @@ fill={"currentColor"} viewBox={"0 0 24 24"}>
           <Link
             href="/contact"
             className={`nav-link ${isActive("/contact") ? "active" : ""}`}
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpen(false)} style={{color:"#fff", backgroundColor: '#2B8A4E', padding: '7px 15px', borderRadius: '50px'}}
           >
-            Contact
+            Contact 
           </Link>
 
           {/* Bouton Espace Pharmacie */}
