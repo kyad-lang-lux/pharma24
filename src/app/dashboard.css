@@ -91,11 +91,12 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 15px;
+  padding: 10px 16px;
   border-radius: 8px;
   font-size: 0.9rem;
   text-decoration: none;
   color: var(--secondary-color);
+  color: #1a1a1a;
   background: var(--white);
   border: 1px solid var(--border-color);
   cursor: pointer;
@@ -159,27 +160,173 @@
     right: 0;
     background: var(--white);
     border-top: 1px solid var(--border-color);
-    padding: 10px 2px calc(5px + env(safe-area-inset-bottom));
+    /* padding: 10px 2px calc(5px + env(safe-area-inset-bottom)); */
     justify-content: space-around;
+    padding: 12px 0;
     z-index: 50;
+    border-radius: 12px 12px 0 0;
   }
 
   .db-tab-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: 1px;
     color: #1f1e1e;
     text-decoration: none;
-    font-size: .8rem;
+    text-align: center;
+    font-size: .75rem;
     font-weight: 600; 
     flex: 1;
   }
 
-  .db-tab-item i { font-size: 1.3rem; }
-  .db-tab-item.active { color: var(--primary-color); }
+  .db-tab-item i { font-size: 1.25rem; }
+  .db-tab-item.active i{
+    transform: scale(1.1);
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 5px;
+    padding-left: 10px;
+    border-radius: 25px;
+    padding-right: 10px;
+  }
+  .db-tab-item.active { color: var(--primary-color); 
+    transform: translateY(-1px);}
 }
 
+
+
+
+/* Wrapper Principal */
+.dash-home-wrapper {
+  padding: 20px 0;
+}
+
+/* En-tête de bienvenue */
+.welcome-section {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.welcome-section h1 {
+  font-size: 1.9rem;
+  color: #1e293b;
+  margin-bottom: 10px;
+}
+
+.welcome-section .highlight {
+  color: #157F3C;
+  font-weight: 800;
+}
+
+.welcome-section p {
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* Petites pilules d'info */
+.quick-stats {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.stat-pill {
+  background: #000;
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Grille de cartes (Bento style) */
+.welcome-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.welcome-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 30px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.welcome-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+  border-color: #cbd5e1;
+}
+
+/* Icônes des cartes */
+.card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.welcome-card h3 {
+  font-size: 1.2rem;
+  color: #1e293b;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.welcome-card p {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+/* Lien d'accès */
+.card-link {
+  color: #fff;
+  background: #6366f1;
+  margin-left: auto;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: flex;
+  width: fit-content;
+  padding: 8px 15px;
+  border-radius: 25px;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.2s;
+}
+
+.card-link:hover {
+  gap: 12px;
+}
+
+/* Responsive mobile */
+@media (max-width: 640px) {
+  .welcome-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .welcome-section h1 {
+    font-size: 1.5rem;
+  }
+}
 
 
 /* --- PAGE PROFIL --- */
@@ -291,8 +438,13 @@
 @media (max-width: 768px) {
   .profile-title {
     font-size: 1.5rem;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
   }
+  .profile-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px; /* Espacement entre les deux cartes bento */
+}
 }
 
 
@@ -523,5 +675,124 @@
   .sub-plans-grid, .benefits-grid, .sub-actions {
     grid-template-columns: 1fr;
   }
+}
+
+
+
+
+
+
+/* --- MA PHARMACIE --- */
+.pharma-page {
+  max-width: 850px;
+  margin: 0 auto;
+}
+
+.pharma-card {
+  background: white;
+  border: 1px solid #eef2f6;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.card-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 15px; }
+.card-subtitle { font-size: 0.95rem; font-weight: 700; margin-top: 10px; }
+.card-hint { font-size: 0.8rem; color: #64748b; margin-bottom: 20px; }
+
+.form-row { margin-bottom: 15px; width: 100%; }
+.flex-row { display: flex; gap: 15px; }
+.half { flex: 1; }
+
+.input-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #1e293b;
+}
+
+/* Toggle Switch Design */
+.toggle-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin: 20px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider {
+  position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc; transition: .4s; border-radius: 34px;
+}
+.slider:before {
+  position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+  background-color: white; transition: .4s; border-radius: 50%;
+}
+input:checked + .slider { background-color: var(--primary-color); }
+input:checked + .slider:before { transform: translateX(20px); }
+
+/* Horaires de garde */
+.hour-item {
+  background: #fdfdfd;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.hour-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.day-name { font-weight: 700; font-size: 0.9rem; }
+
+.hour-options { margin-bottom: 12px; }
+.checkbox-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.time-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.time-input input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 0.85rem;
+}
+
+.time-input i {
+  position: absolute;
+  right: 12px;
+  color: #94a3b8;
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.mt-20 { margin-top: 20px; }
+
+@media (max-width: 600px) {
+  .flex-row { flex-direction: column; gap: 10px; }
+  .pharma-card { padding: 16px; }
 }
 

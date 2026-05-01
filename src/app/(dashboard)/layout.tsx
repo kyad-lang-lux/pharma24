@@ -12,11 +12,11 @@ export default function DashboardLayout({
   const pathname = usePathname();
 
   const navLinks = [
-    { name: 'Ma pharmacie', href: '/dashboard', icon: 'fa-solid fa-shop' },
-    { name: 'Profil', href: '/profil', icon: 'fa-solid fa-user' },
-    { name: 'Abonnement', href: '/abonnement', icon: 'fa-solid fa-credit-card' },
-  ];
-
+  { name: 'Accueil', href: '/dashboard', icon: 'fa fa-home' },
+  { name: 'Ma pharmacie', href: '/mapharmacie', icon: 'fa-solid fa-notes-medical' },
+  { name: 'Abonnement', href: '/abonnement', icon: 'fa fa-star' },
+  { name: 'Parametres', href: '/parametre', icon: 'fa fa-cog' },
+];
   const LogoIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width={28} height={28} fill={"currentColor"} viewBox={"0 0 24 24"}>
       <path d="M21 7.99h-5V3c0-.55-.45-1-1-1H9c-.55 0-1 .45-1 1v4.99H3c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h5V21c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-5.01h5c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1m-1 6h-5c-.55 0-1 .45-1 1V20h-4v-5.01c0-.55-.45-1-1-1H4v-4h5c.55 0 1-.45 1-1V4h4v4.99c0 .55.45 1 1 1h5z"></path>
@@ -56,11 +56,11 @@ fill={"currentColor"} viewBox={"0 0 24 24"}>
 
         <div className="db-sidebar-footer">
           <Link href="/" className="db-footer-link">
-            <i className="fa-solid fa-house"></i>
-            <span>Retour au site</span>
+            <i className="fa fa-house"></i>
+            <span>Retour au site</span> 
           </Link>
           <button className="db-logout-btn">
-            <i className="fa-solid fa-arrow-right-from-bracket"></i>
+            <i className="fa fa-arrow-right-from-bracket"></i>
             <span>Déconnexion</span>
           </button>
         </div>

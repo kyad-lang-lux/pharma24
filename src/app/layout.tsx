@@ -9,9 +9,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   // Liste des routes où la Navbar et le Footer ne doivent pas apparaître
   const isDashboard =
-    pathname?.startsWith("/dashboard") ||
+    pathname?.startsWith("/mapharmacie") ||
     pathname?.startsWith("/abonnement") ||
-    pathname?.startsWith("/profil");
+    pathname?.startsWith("/dashboard") ||
+    pathname?.startsWith("/parametre");
     // pathname?.startsWith("/connexion") ||
     // pathname?.startsWith("/inscription");
 
