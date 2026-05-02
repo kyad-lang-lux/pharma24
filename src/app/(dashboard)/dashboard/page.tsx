@@ -27,7 +27,14 @@ export default function DashboardHome() {
       link: "/parametre",
       icon: "fa-solid fa-user-gear",
       color: "#ef4444"
-    }
+    },
+    {
+  title: "Rapports & Statistiques",
+  desc: "Consultez vos rapports d'activité, analysez vos statistiques de visibilité et exportez vos données.",
+  link: "/rapports",
+  icon: "fa fa-chart-pie",
+  color: "#3b82f6" // Bleu pour le côté analytique
+}
   ];
 
   return (
