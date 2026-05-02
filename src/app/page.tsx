@@ -653,7 +653,7 @@ export default function HomePage() {
   <div className="container">
     <div className="section-header">
       <span className="badge-light">Témoignages</span>
-      <h2>Ce que disent nos utilisateurs</h2>
+      <h2>Ce que disent le s utilisateurs</h2>
       <p>Des centaines de personnes utilisent Pharma24 chaque jour pour simplifier leur quotidien.</p>
     </div>
 
@@ -699,7 +699,7 @@ export default function HomePage() {
         </div>
         <p>"Interface simple et efficace. Je recommande Pharma24 à tous mes proches au Bénin."</p>
         <div className="stars">
-          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+          {[...Array(4)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
         </div>
       </div>
 
@@ -729,7 +729,7 @@ export default function HomePage() {
         </div>
         <p>"La géolocalisation est super précise. Ça m'a guidé directement vers la pharmacie la plus proche via Google Maps."</p>
         <div className="stars">
-          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+          {[...Array(4)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
         </div>
       </div>
 

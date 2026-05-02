@@ -7,8 +7,8 @@ export default function LoginPage() {
 
   return (
     <div className="auth-page">
-      <div className="auth-card" style={{ marginTop: "-130px"}}>
-        <div className="auth-logo">
+      <div className="auth-card" style={{ marginTop: "-50px"}}>
+        <div className="auth-logo"> 
           <div className="logo-icon">
             {/* <i className='bx bx-plus-medical'></i> */}
              <svg  xmlns="http://www.w3.org/2000/svg" width={24} height={24} 

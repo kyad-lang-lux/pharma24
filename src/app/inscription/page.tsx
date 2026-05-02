@@ -49,6 +49,16 @@ fill={"currentColor"} viewBox={"0 0 24 24"}>
 
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="input-group">
+            <label>Nom de la pharmacie</label>
+            <div className="input-field-wrapper">
+              <input 
+                type="text" 
+                placeholder="Nom de la pharmacie" 
+                required 
+              />
+            </div>
+          </div>
+          <div className="input-group">
             <label>Email</label>
             <div className="input-field-wrapper">
               <input 

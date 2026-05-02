@@ -1388,8 +1388,8 @@ padding: 8px 12px;
 .auth-card {
   background: white;
   width: 100%;
-  max-width: 400px; /* Réduit de 450px */
-  padding: 25px;    /* Réduit de 40px */
+  max-width: 500px; /* Réduit de 450px */
+  padding: 20px;    /* Réduit de 40px */
   border-radius: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
   text-align: center;
@@ -1398,20 +1398,20 @@ padding: 8px 12px;
 .auth-logo {
   display: flex;
   justify-content: center;
-  margin-bottom: 12px; /* Réduit */
+  margin-bottom: 5px; /* Réduit */
 }
 
 .auth-card h1 {
   font-size: 24px; /* Réduit de 28px */
   font-weight: 700;
   color: #1a1a1a;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
 }
 
 .auth-card p.subtitle {
   color: #64748b;
   font-size: 14px; /* Réduit de 15px */
-  margin-bottom: 20px; /* Réduit de 30px */
+  margin-bottom: 15px; /* Réduit de 30px */
 }
 
 /* Google Button */
@@ -1429,7 +1429,7 @@ padding: 8px 12px;
   font-weight: 600;
   font-size: 14px;
   cursor: pointer;
-  margin-bottom: 15px; /* Réduit de 25px */
+  margin-bottom: 10px; /* Réduit de 25px */
   transition: all 0.2s;
 }
 
@@ -1552,7 +1552,7 @@ padding: 8px 12px;
 }
 
 .auth-footer a {
-  color: #2B8A4E;
+  color: #15803d;
   font-weight: 600;
   text-decoration: none;
 }
@@ -2445,6 +2445,227 @@ padding: 8px 12px;
 
 
 
+/* RESET & BASE */
+.admin-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Poppins', sans-serif;
+  background: #fcfcfc;
+}
+
+/* LOGIN COMPACT */
+.login-screen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111;
+}
+
+.login-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 350px;
+}
+
+.login-box h3 { margin: 0; font-size: 1.2rem; text-align: center; }
+.login-box input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  outline: none;
+}
+
+.login-box button {
+  background: #15803d;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.err { color: #f10e0e; font-size: 0.8rem; text-align: center; margin: 0; }
+
+/* HEADER */
+.dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.dash-header h1 { font-size: 1.4rem; margin: 0; color: #1e293b; }
+.dash-header p { font-size: 0.85rem; color: #64748b; margin: 5px 0 0; }
+
+.logout-mini {
+  background: #b91c1c;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* MINI STATS */
+.mini-stats {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.m-card {
+  flex: 1;
+  min-width: 150px;
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #edf2f7;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-card span { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+.m-card strong { font-size: 1.5rem; color: #1e293b; }
+.m-card.warning { border-bottom: 3px solid #f59e0b; }
+
+/* LISTE DES PHARMACIES */
+.table-section {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #edf2f7;
+  overflow: hidden;
+}
+
+.table-head {
+  padding: 15px 20px;
+  border-bottom: 1px solid #edf2f7;
+  background: #fafafa;
+}
+
+.table-head h2 { font-size: 1rem; margin: 0; color: #1e293b; }
+
+.pharma-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid #f8fafc;
+  transition: background 0.2s;
+}
+
+.pharma-row:hover { background: #fdfdfd; }
+
+.pharma-info {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+}
+
+.p-name { font-weight: 700; font-size: 0.9rem; color: #1e293b; }
+.p-email { font-size: 0.8rem; color: #64748b; }
+.p-date { flex: 1; font-size: 0.8rem; color: #94a3b8; text-align: center; }
+
+/* ACTIONS BOUTONS */
+.p-actions {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.btn-v, .btn-r {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.btn-v { background: #15803d; color: white; } /* VERT CONFIRMER */
+.btn-r { background: #ec0909; color: white; } /* ROUGE REFUSER */
+
+.btn-v:hover, .btn-r:hover { opacity: 0.8; }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+  .pharma-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .p-actions { width: 100%; justify-content: flex-start; }
+  .p-date { text-align: left; }
+}
+
+
+
+/* Ajouts spécifiques pour le mot de passe et l'ergonomie */
+.pass-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pass-container input { width: 100%; }
+
+.eye-btn {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.login-btn {
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.empty {
+  padding: 20px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+/* Style pour les confirmées */
+.pharma-row.confirmed {
+  border-left: 4px solid #10b981;
+}
+
+.p-status {
+  font-size: 0.7rem;
+  background: #dcfce7;
+  color: #166534;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* Mobile Friendly */
+@media (max-width: 600px) {
+  .mini-stats { flex-direction: column; }
+  .pharma-row { flex-direction: column; gap: 12px; align-items: flex-start; }
+  .p-actions { width: 100%; }
+  .p-actions button { flex: 1; }
+}
 
 
 

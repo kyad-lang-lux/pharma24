@@ -13,6 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     pathname?.startsWith("/abonnement") ||
     pathname?.startsWith("/dashboard") ||
     pathname?.startsWith("/rapports") ||
+    pathname?.startsWith("/admin") ||
     pathname?.startsWith("/parametre");
     // pathname?.startsWith("/connexion") ||
     // pathname?.startsWith("/inscription");
