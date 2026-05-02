@@ -7,11 +7,12 @@ import { usePathname } from "next/navigation";
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // Liste des routes où la Navbar et le Footer ne doivent pas apparaître
+  // Liste des routes où la Navbar et le Footer ne doivent pas apparaître 
   const isDashboard =
     pathname?.startsWith("/mapharmacie") ||
     pathname?.startsWith("/abonnement") ||
     pathname?.startsWith("/dashboard") ||
+    pathname?.startsWith("/rapports") ||
     pathname?.startsWith("/parametre");
     // pathname?.startsWith("/connexion") ||
     // pathname?.startsWith("/inscription");

@@ -34,10 +34,6 @@ export default function PrivacyPage() {
                 <strong>Pour les utilisateurs :</strong> aucune donnée personnelle n'est requise pour consulter les pharmacies. 
                 Une géolocalisation peut être demandée, avec votre accord, pour centrer la carte.
               </li>
-              <li>
-                <strong>Données techniques :</strong> compteur de vues anonyme par pharmacie, données de navigation 
-                strictement nécessaires.
-              </li>
             </ul>
           </section>
 
@@ -100,7 +96,7 @@ export default function PrivacyPage() {
             </ul>
             <p>
               Pour exercer ces droits, contactez-nous à : 
-              <a href="mailto:contact@pharma24.bj" className="text-green"> contact@pharma24.bj</a>.
+              <a href="mailto:contact24pharma@gmail.com" className="text-green"> contact24pharma@gmail.com</a>.
             </p>
           </section>
 
@@ -113,25 +109,17 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2>10. Mineurs</h2>
-            <p>
-              Le service ne vise pas spécifiquement les personnes de moins de 13 ans. Si vous estimez qu'un mineur 
-              nous a communiqué des données personnelles, contactez-nous afin que nous puissions les supprimer.
-            </p>
-          </section>
-
-          <section>
-            <h2>11. Modifications</h2>
+            <h2>10. Modifications</h2>
             <p>
               La présente politique peut être mise à jour. La date de dernière modification est indiquée en haut de la page.
             </p>
           </section>
 
           <section className="contact-legal">
-            <h2>12. Contact</h2>
+            <h2>11. Contact</h2>
             <p>
               Pour toute question, écrivez-nous à : 
-              <a href="mailto:contact@pharma24.bj"> contact@pharma24.bj</a>
+              <a href="mailto:contact24pharma@gmail.com"> contact24pharma@gmail.com</a>
             </p>
           </section>
         </div>

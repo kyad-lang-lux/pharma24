@@ -157,7 +157,7 @@ export default function AbonnementPage() {
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontWeight: '600' }}>20 000 FCFA</div>
-              <a href="#" style={{ fontSize: '12px', color: '#10b981', textDecoration: 'none' }}>
+              <a href="#" style={{ fontSize: '12px', color: '#157F3C', textDecoration: 'none' }}>
                 <i className="fa-solid fa-download"></i> Facture
               </a>
             </div>
@@ -175,7 +175,7 @@ export default function AbonnementPage() {
             </div>
             <div style={{ textAlign: 'right' }}>
               <div style={{ fontWeight: '600' }}>2 000 FCFA</div>
-              <a href="#" style={{ fontSize: '12px', color: '#10b981', textDecoration: 'none' }}>
+              <a href="#" style={{ fontSize: '12px', color: '#157F3C', textDecoration: 'none' }}>
                 <i className="fa-solid fa-download"></i> Facture
               </a>
             </div>

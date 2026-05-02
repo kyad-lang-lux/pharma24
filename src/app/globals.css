@@ -1095,6 +1095,9 @@ padding: 8px 12px;
 .bg-blue { background-color: #3b82f6; }
 .bg-green { background-color: #10b981; }
 .bg-orange { background-color: #f59e0b; }
+.bg-red { background-color: #ef4444; }
+.bg-purple { background-color: #8b5cf6; }
+.bg-teal { background-color: teal; }
 
 .testimonial-header h4 {
   font-size: 16px;
@@ -1228,20 +1231,20 @@ padding: 8px 12px;
 
 /* --- PAGES LÉGALES (CGU / CONFIDENTIALITÉ) --- */
 .legal-page {
-  padding: 100px 0;
+  padding: 10px 0;
   background-color: #fcfdfe;
   min-height: 100vh;
 }
 
 .container-small {
-  max-width: 850px;
+  max-width: 90%;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 100px;
 }
 
 .legal-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 5px;
 }
 
 .badge-legal {
@@ -1249,18 +1252,18 @@ padding: 8px 12px;
   align-items: center;
   gap: 8px;
   background-color: #e6f7f1; /* Vert très clair */
-  color: #10b981;
+  color: #15803d;
   padding: 8px 16px;
   border-radius: 50px;
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
 }
 
 .legal-header h1 {
-  font-size: 42px;
+  font-size: 30px;
   color: #0f172a;
-  margin-bottom: 15px;
+  margin-bottom: 5px;
 }
 
 .last-update {
@@ -1270,14 +1273,14 @@ padding: 8px 12px;
 
 .legal-content {
   background: #ffffff;
-  padding: 50px;
+  padding: 30px;
   border-radius: 32px;
   border: 1px solid #f1f5f9;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.02);
 }
 
 .legal-content section {
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .legal-content h2 {
@@ -1289,14 +1292,14 @@ padding: 8px 12px;
 }
 
 .legal-content p, .legal-content li {
-  font-size: 16px;
+  font-size: 13px;
   color: #475569;
   line-height: 1.7;
 }
 
 .legal-content ul {
   padding-left: 20px;
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .legal-content li {

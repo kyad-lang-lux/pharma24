@@ -658,55 +658,99 @@ export default function HomePage() {
     </div>
 
     <div className="testimonials-track">
-      {/* On met deux fois le même groupe pour créer la boucle infinie */}
-      {[1, 2].map((i) => (
-        <div className="testimonials-group" key={i}>
-          <div className="testimonial-card">
-            <div className="testimonial-header">
-              <div className="avatar-circle bg-blue">KA</div>
-              <div>
-                <h4>Koffi Agossou</h4>
-                <span>Cotonou, Littoral</span>
-              </div>
-            </div>
-            <p>"Grâce à Pharma24, j'ai trouvé une pharmacie de garde à minuit pour mon fils sans avoir à faire le tour de la ville."</p>
-            <div className="stars">
-              {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
-            </div>
+  {/* On met deux fois le même groupe pour créer la boucle infinie */}
+  {[1, 2].map((i) => (
+    <div className="testimonials-group" key={i}>
+      <div className="testimonial-card">
+        <div className="testimonial-header">
+          <div className="avatar-circle bg-blue">KA</div>
+          <div>
+            <h4>Koffi AGOSSOU</h4>
+            <span>Cotonou, Littoral</span>
           </div>
-
-          <div className="testimonial-card">
-            <div className="testimonial-header">
-              <div className="avatar-circle bg-green">SD</div>
-              <div>
-                <h4>Sika Dossou</h4>
-                <span>Abomey-Calavi</span>
-              </div>
-            </div>
-            <p>"Le fait de pouvoir commander par WhatsApp et payer par MoMo change tout. C'est un gain de temps énorme."</p>
-            <div className="stars">
-              {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
-            </div>
-          </div>
-
-          <div className="testimonial-card">
-            <div className="testimonial-header">
-              <div className="avatar-circle bg-orange">MT</div>
-              <div>
-                <h4>Marc Tognon</h4>
-                <span>Porto-Novo</span>
-              </div>
-            </div>
-            <p>"Interface simple et efficace. Je recommande Pharma24 à tous mes proches au Bénin."</p>
-            <div className="stars">
-              {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
-            </div>
-          </div>
-          
-          {/* Ajoute tes autres cartes ici si besoin, elles seront dupliquées automatiquement par le .map */}
         </div>
-      ))}
+        <p>"Grâce à Pharma24, j'ai trouvé une pharmacie de garde à minuit pour mon fils sans avoir à faire le tour de la ville."</p>
+        <div className="stars">
+          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+        </div>
+      </div>
+
+      <div className="testimonial-card">
+        <div className="testimonial-header">
+          <div className="avatar-circle bg-green">SD</div>
+          <div>
+            <h4>Sika DOSSOU</h4>
+            <span>Abomey-Calavi</span>
+          </div>
+        </div>
+        <p>"Le fait de pouvoir commander par WhatsApp et payer par MoMo change tout. C'est un gain de temps énorme."</p>
+        <div className="stars">
+          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+        </div>
+      </div>
+
+      <div className="testimonial-card">
+        <div className="testimonial-header">
+          <div className="avatar-circle bg-orange">MT</div>
+          <div>
+            <h4>Marc TOGNON</h4>
+            <span>Porto-Novo</span>
+          </div>
+        </div>
+        <p>"Interface simple et efficace. Je recommande Pharma24 à tous mes proches au Bénin."</p>
+        <div className="stars">
+          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+        </div>
+      </div>
+
+      {/* --- Nouveaux Témoignages ajoutés --- */}
+
+      <div className="testimonial-card">
+        <div className="testimonial-header">
+          <div className="avatar-circle bg-purple">AB</div>
+          <div>
+            <h4>Amandine BIO</h4>
+            <span>Parakou, Borgou</span>
+          </div>
+        </div>
+        <p>"Vraiment pratique pour vérifier si une pharmacie est ouverte avant de se déplacer sous le soleil de Parakou."</p>
+        <div className="stars">
+          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+        </div>
+      </div>
+
+      <div className="testimonial-card">
+        <div className="testimonial-header">
+          <div className="avatar-circle bg-red">FS</div>
+          <div>
+            <h4>Félicien SOGLO</h4>
+            <span>Bohicon, Zou</span>
+          </div>
+        </div>
+        <p>"La géolocalisation est super précise. Ça m'a guidé directement vers la pharmacie la plus proche via Google Maps."</p>
+        <div className="stars">
+          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+        </div>
+      </div>
+
+      <div className="testimonial-card">
+        <div className="testimonial-header">
+          <div className="avatar-circle bg-teal">YH</div>
+          <div>
+            <h4>Yasmine HODONOU</h4>
+            <span>Ouidah, Atlantique</span>
+          </div>
+        </div>
+        <p>"Le service client est au top. J'ai posé une question sur un médicament et j'ai eu une réponse via WhatsApp en 2 minutes."</p>
+        <div className="stars">
+          {[...Array(5)].map((_, idx) => <i key={idx} className="fa-solid fa-star"></i>)}
+        </div>
+      </div>
+      
     </div>
+  ))}
+</div>
+
   </div>
 </section>
 

@@ -1,5 +1,6 @@
+"use client";
 import React from 'react';
-
+// import { useState, useEffect } from "react";
 export default function TermsPage() {
   return (
     <main className="legal-page">
@@ -10,7 +11,7 @@ export default function TermsPage() {
           </span>
           <h1>Conditions d'utilisation</h1>
           <p className="last-update">Dernière mise à jour : 27 avril 2026</p>
-        </div>
+        </div> 
 
         <div className="legal-content">
           <section>
@@ -19,7 +20,7 @@ export default function TermsPage() {
               Les présentes Conditions Générales d'Utilisation (« CGU ») encadrent l'utilisation de la plateforme 
               <strong> Pharma24</strong>, accessible en ligne et destinée à mettre en relation les utilisateurs (patients) 
               et les pharmacies situées au Bénin, en particulier pour identifier les pharmacies de garde, leurs horaires, 
-              et faciliter la prise de contact.
+              et faciliter la prise de contact et réduire les files d'attentes. 
             </p>
           </section>
 
@@ -52,22 +53,19 @@ export default function TermsPage() {
             <div className="pricing-mini-grid">
               <div className="pricing-mini-card">
                 <strong>Mensuel</strong>
-                <span>2 000 FCFA — 31 crédits</span>
               </div>
               <div className="pricing-mini-card">
                 <strong>Annuel</strong>
-                <span>20 000 FCFA — 365 crédits</span>
               </div>
             </div>
             <p>
-              Lorsque les crédits arrivent à zéro, la fiche n'est plus visible des utilisateurs jusqu'au 
-              renouvellement de l'abonnement.
+              Une fois dans leurs espaces, le pharmacie peuvent gérer son abonnement selon le plan qui lui convient.
             </p>
           </section>
 
           <section>
             <h2>5. Obligations des utilisateurs</h2>
-            <p>L'utilisateur s'engage à :</p>
+            <p>L'utilisateur (pharmacie) s'engage à :</p>
             <ul>
               <li>Fournir des informations exactes et à jour ;</li>
               <li>Ne pas détourner la plateforme de sa finalité ;</li>
@@ -85,7 +83,7 @@ export default function TermsPage() {
             <ul>
               <li>Tenir ses horaires à jour, en particulier les périodes de garde ;</li>
               <li>Respecter la réglementation pharmaceutique en vigueur ;</li>
-              <li>Répondre dans des délais raisonnables aux sollicitations légitimes des patients.</li>
+              <li>Répondre dans des délais raisonnables aux sollicitations légitimes des patients ou des clients.</li>
             </ul>
           </section>
 
@@ -98,17 +96,9 @@ export default function TermsPage() {
             </p>
           </section>
 
-          <section>
-            <h2>8. Propriété intellectuelle</h2>
-            <p>
-              L'ensemble des éléments de la plateforme (textes, logos, graphismes, code) est protégé par le droit 
-              de la propriété intellectuelle. Toute reproduction, représentation ou diffusion sans autorisation 
-              préalable est interdite.
-            </p>
-          </section>
 
           <section>
-            <h2>9. Responsabilité</h2>
+            <h2>8. Responsabilité</h2>
             <p>
               Pharma24 met en œuvre les moyens raisonnables pour assurer la disponibilité du service mais ne 
               saurait être tenue responsable des interruptions, erreurs ou inexactitudes dans les données fournies 
@@ -117,7 +107,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2>10. Suspension et résiliation</h2>
+            <h2>9. Suspension et résiliation</h2>
             <p>
               Pharma24 se réserve le droit de suspendre ou supprimer un compte en cas de manquement aux présentes 
               CGU, d'informations frauduleuses ou de comportement nuisant à la plateforme ou à ses utilisateurs.
@@ -125,7 +115,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2>11. Modification des CGU</h2>
+            <h2>10. Modification des CGU</h2>
             <p>
               Pharma24 peut modifier les présentes CGU à tout moment. Les nouvelles conditions s'appliquent 
               dès leur publication sur la plateforme.
@@ -133,10 +123,9 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2>12. Droit applicable</h2>
+            <h2>11. Droit applicable</h2>
             <p>
-              Les présentes CGU sont soumises au droit béninois. Tout litige relèvera des juridictions 
-              compétentes de Cotonou.
+              Les présentes CGU sont soumises au droit béninois.
             </p>
           </section>
 
@@ -144,11 +133,15 @@ export default function TermsPage() {
             <h2>13. Contact</h2>
             <p>
               Pour toute question relative aux présentes CGU, écrivez-nous à : 
-              <a href="mailto:contact@pharma24.bj"> contact@pharma24.bj</a>
+              <a href="mailto:contact24pharma@gmail.com"> contact24pharma@gmail.com</a>
             </p>
           </section>
         </div>
       </div>
+      <div className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+  {/* <i className='bx bx-shape-triangle'></i> */}
+  <i className="fa-solid fa-play triangle-up"></i>
+</div>
     </main>
   );
 }

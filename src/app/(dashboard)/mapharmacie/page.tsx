@@ -82,7 +82,7 @@ export default function MaPharmacie() {
 
   const toggleJour = (jour: string) => {
     setJoursGarde(prev => ({ ...prev, [jour]: !prev[jour] }));
-  };
+  }; 
 
   return (
     <div className="pharma-page">
