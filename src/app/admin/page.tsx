@@ -6,21 +6,33 @@ export default function AdminPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
+  
+  // Données réelles venant de Turso
+  const [allUsers, setAllUsers] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // Listes de pharmacies (Simulation d'état local)
-  const [pending, setPending] = useState([
-    { id: 1, nom: "Pharmacie de l'Étoile", email: "etoile@gmail.com", date: "01/05/2026" },
-    { id: 2, nom: "Pharmacie Saint Jean", email: "stjean@yahoo.fr", date: "02/05/2026" },
-  ]);
+  // Fonction pour charger les données depuis la base de données
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/admin/users");
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setAllUsers(data);
+      }
+    } catch (err) {
+      console.error("Erreur de chargement:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const [confirmed, setConfirmed] = useState([
-    { id: 10, nom: "Pharmacie Fidjrossè", email: "fidjrosse@pharma.bj", date: "20/04/2026" }
-  ]);
-
-  // Vérifier la session au chargement
   useEffect(() => {
     const session = localStorage.getItem('pharma24_admin_session');
-    if (session === 'true') setIsAuthenticated(true);
+    if (session === 'true') {
+      setIsAuthenticated(true);
+      fetchUsers();
+    }
   }, []);
 
   const handleLogin = (e: React.FormEvent) => {
@@ -28,6 +40,7 @@ export default function AdminPage() {
     if (credentials.username === "Pharma24admin" && credentials.password === "Pharma24#0a") {
       setIsAuthenticated(true);
       localStorage.setItem('pharma24_admin_session', 'true');
+      fetchUsers();
       setError('');
     } else {
       setError('Identifiants incorrects');
@@ -39,15 +52,25 @@ export default function AdminPage() {
     localStorage.removeItem('pharma24_admin_session');
   };
 
-  // Actions Boutons
-  const approvePharma = (pharma: any) => {
-    setConfirmed([...confirmed, pharma]);
-    setPending(pending.filter(p => p.id !== pharma.id));
+  // Action pour Approuver ou Refuser via l'API
+  const updateStatus = async (id: number, action: "approve" | "reject") => {
+    try {
+      const res = await fetch("/api/admin/users", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, action })
+      });
+      if (res.ok) {
+        fetchUsers(); // Rafraîchir la liste après modification
+      }
+    } catch (err) {
+      alert("Erreur lors de l'opération");
+    }
   };
 
-  const rejectPharma = (id: number) => {
-    setPending(pending.filter(p => p.id !== id));
-  };
+  // Filtrage des données
+  const pending = allUsers.filter(u => !u.isValidated);
+  const confirmed = allUsers.filter(u => u.isValidated);
 
   if (!isAuthenticated) {
     return (
@@ -99,9 +122,10 @@ export default function AdminPage() {
       <section className="table-section">
         <div className="table-head">
           <h2><i className="fa-solid fa-clock"></i> Demandes en attente ({pending.length})</h2>
+          {loading && <span style={{fontSize: '0.8rem', color: '#666'}}> Chargement...</span>}
         </div>
         <div className="list-container">
-          {pending.length === 0 && <p className="empty">Aucune demande en attente.</p>}
+          {pending.length === 0 && !loading && <p className="empty">Aucune demande en attente.</p>}
           {pending.map((pharma) => (
             <div className="pharma-row" key={pharma.id}>
               <div className="pharma-info">
@@ -109,8 +133,8 @@ export default function AdminPage() {
                 <span className="p-email">{pharma.email}</span>
               </div>
               <div className="p-actions">
-                <button className="btn-v" onClick={() => approvePharma(pharma)}>Confirmer</button>
-                <button className="btn-r" onClick={() => rejectPharma(pharma.id)}>Refuser</button>
+                <button className="btn-v" onClick={() => updateStatus(pharma.id, "approve")}>Confirmer</button>
+                <button className="btn-r" onClick={() => updateStatus(pharma.id, "reject")}>Refuser</button>
               </div>
             </div>
           ))}
@@ -123,6 +147,7 @@ export default function AdminPage() {
           <h2 style={{ color: '#10b981' }}><i className="fa-solid fa-circle-check"></i> Pharmacies Confirmées ({confirmed.length})</h2>
         </div>
         <div className="list-container">
+          {confirmed.length === 0 && !loading && <p className="empty">Aucune pharmacie confirmée.</p>}
           {confirmed.map((pharma) => (
             <div className="pharma-row confirmed" key={pharma.id}>
               <div className="pharma-info">

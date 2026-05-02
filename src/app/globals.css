@@ -2673,7 +2673,26 @@ padding: 8px 12px;
 
 
 
+.success-card {
+  text-align: center;
+  padding: 50px !important;
+}
 
+.success-icon {
+  font-size: 4rem;
+  color: #10b981;
+  margin-bottom: 20px;
+}
+
+.info-box {
+  background: #f0fdf4;
+  border: 1px solid #dcfce7;
+  padding: 15px;
+  border-radius: 8px;
+  color: #166534;
+  font-size: 0.9rem;
+  margin: 20px 0;
+}
 
 
 

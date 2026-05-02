@@ -91,13 +91,6 @@ export default function MaPharmacie() {
         <p>Gérez les informations et les horaires de votre pharmacie.</p>
       </div>
 
-      <div className="sub-status-banner">
-        <div className="status-icon"><i className="fa-solid fa-bolt"></i></div>
-        <div className="status-info">
-          <h3>Abonnement actif — 362 jours restants</h3>
-          <p>Votre fiche est visible par les utilisateurs.</p>
-        </div>
-      </div>
 
       <div className="pharma-card">
         <h2 className="card-title">Modifier votre pharmacie</h2>

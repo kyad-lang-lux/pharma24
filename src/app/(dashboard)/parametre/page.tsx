@@ -1,14 +1,73 @@
 "use client";
 import React, { useState } from 'react';
+import { useRouter } from "next/navigation";
 
 export default function ProfilPage() {
+  const router = useRouter();
+  
   // États pour gérer la visibilité des mots de passe
   const [showNewPass, setShowNewPass] = useState(false);
   const [showConfirmPass, setShowConfirmPass] = useState(false);
 
-  const handleLogout = () => {
-    // Ajoutez ici votre logique de déconnexion (ex: suppression cookie, redirection)
-    console.log("Déconnexion demandée...");
+  // États pour le formulaire
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ type: "", text: "" });
+
+  // --- LOGIQUE DE DÉCONNEXION ---
+  const handleLogout = async () => {
+    try {
+      const res = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+
+      if (res.ok) {
+        // Redirection vers la page de connexion après déconnexion réussie
+        router.push("/connexion"); 
+        router.refresh();
+      }
+    } catch (err) {
+      console.error("Erreur lors de la déconnexion", err);
+    }
+  };
+
+  // --- FONCTION POUR MODIFIER LE MOT DE PASSE ---
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setMessage({ type: "", text: "" });
+
+    if (newPassword !== confirmPassword) {
+      return setMessage({ type: "error", text: "Les mots de passe ne correspondent pas." });
+    }
+
+    if (newPassword.length < 6) {
+      return setMessage({ type: "error", text: "Le mot de passe doit contenir au moins 6 caractères." });
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/auth/update-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ newPassword }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        setMessage({ type: "success", text: "Mot de passe mis à jour avec succès !" });
+        setNewPassword("");
+        setConfirmPassword("");
+      } else {
+        setMessage({ type: "error", text: data.error || "Une erreur est survenue." });
+      }
+    } catch (err) {
+      setMessage({ type: "error", text: "Erreur de connexion au serveur." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -36,7 +95,23 @@ export default function ProfilPage() {
           <div className="card-header">
             <span> <i className="fa-solid fa-lock"></i> Modifier le mot de passe</span>
           </div>
-          <form className="card-body">
+          
+          {/* Affichage des messages */}
+          {message.text && (
+            <div style={{ 
+              padding: '10px 20px', 
+              margin: '10px 20px', 
+              borderRadius: '8px', 
+              fontSize: '0.9rem',
+              backgroundColor: message.type === "error" ? '#fef2f2' : '#f0fdf4',
+              color: message.type === "error" ? '#dc2626' : '#16a34a',
+              border: `1px solid ${message.type === "error" ? '#fee2e2' : '#dcfce7'}`
+            }}>
+              {message.text}
+            </div>
+          )}
+
+          <form className="card-body" onSubmit={handleSubmit}>
             
             {/* Nouveau mot de passe */}
             <div className="input-group">
@@ -47,6 +122,9 @@ export default function ProfilPage() {
                   className="db-input" 
                   placeholder="........" 
                   style={{ width: '100%' }}
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  required
                 />
                 <i 
                   className={`fa-solid ${showNewPass ? 'fa-eye-slash' : 'fa-eye'}`}
@@ -72,6 +150,9 @@ export default function ProfilPage() {
                   className="db-input" 
                   placeholder="........" 
                   style={{ width: '100%' }}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
                 />
                 <i 
                   className={`fa-solid ${showConfirmPass ? 'fa-eye-slash' : 'fa-eye'}`}
@@ -88,8 +169,8 @@ export default function ProfilPage() {
               </div>
             </div>
 
-            <button type="submit" className="db-btn-primary">
-              Modifier le mot de passe
+            <button type="submit" className="db-btn-primary" disabled={loading}>
+              {loading ? "Mise à jour..." : "Modifier le mot de passe"}
             </button>
           </form>
         </div>
@@ -103,7 +184,7 @@ export default function ProfilPage() {
               display: 'flex',
               alignItems: 'center',
               gap: '10px',
-              color: '#fff', // Rouge pour l'alerte
+              color: '#fff', 
               background: '#dc2626',
               border: '1px solid #fee2e2',
               padding: '12px 20px',
