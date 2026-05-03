@@ -28,7 +28,7 @@ export default function AbonnementPage() {
   return (
     <div className="sub-wrapper">
       <div className="sub-header">
-        <h1>Abonnement Pharma24</h1>
+        <h1>Abonnement Pharma<span>24</span> </h1>
         <p>Choisissez le plan qui vous convient. Sans engagement, résiliable à tout moment.</p>
       </div>
 

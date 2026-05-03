@@ -30,6 +30,7 @@ export default function DashboardLayout({
     { name: 'Ma pharmacie', href: '/mapharmacie', icon: 'fa-solid fa-notes-medical' },
     { name: 'Abonnement', href: '/abonnement', icon: 'fa fa-star' },
     { name: 'Rapports', href: '/rapports', icon: 'fa fa-chart-pie' },
+    { name: 'Parametres', href: '/parametre', icon: 'fa fa-cog' },
   ];
 
   return (
@@ -61,10 +62,10 @@ export default function DashboardLayout({
         </nav>
 
         <div className="db-sidebar-footer">
-          <Link href="/parametre" className="db-footer-link">
+          {/* <Link href="/parametre" className="db-footer-link">
             <i className="fa fa-cog"></i>
             <span>Parametres</span> 
-          </Link>
+          </Link> */}
           <Link href="/" className="db-footer-link">
             <i className="fa fa-house"></i>
             <span>Retour au site</span> 

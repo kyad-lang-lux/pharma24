@@ -2,16 +2,26 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { pharmacies } from "@/db/schema"; // On importe la table pharmacies
 import { eq } from "drizzle-orm";
 
 export async function GET() {
   const cookieStore = await cookies();
   const userId = cookieStore.get("pharma_session")?.value;
 
-  if (!userId) return NextResponse.json({ error: "Non connecté" }, { status: 401 });
+  if (!userId) {
+    return NextResponse.json({ error: "Non connecté" }, { status: 401 });
+  }
 
-  const user = await db.select().from(users).where(eq(users.id, Number(userId))).get();
+  // On cherche l'entrée dans la table pharmacies liée à cet utilisateur
+  const pharma = await db
+    .select()
+    .from(pharmacies)
+    .where(eq(pharmacies.userId, Number(userId)))
+    .get();
 
-  return NextResponse.json({ nom: user?.nom });
+  // Si la pharmacie n'existe pas encore en base, on peut renvoyer un nom par défaut
+  return NextResponse.json({ 
+    nom: pharma?.nom || "Ma Pharmacie" 
+  });
 }

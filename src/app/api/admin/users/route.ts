@@ -16,19 +16,29 @@ export async function GET() {
 
 
 // 2. Valider ou Refuser un utilisateur
+// 2. Valider ou Refuser un utilisateur
 export async function PATCH(req: Request) {
   try {
     const { id, action } = await req.json();
 
     if (action === "approve") {
-      await db.update(users).set({ isValidated: true }).where(eq(users.id, id));
-      return NextResponse.json({ message: "Utilisateur validé" });
+      // On valide le compte ET on ajoute 31 crédits simultanément
+      await db.update(users)
+        .set({ 
+          isValidated: true, 
+          credits: 31 // Ajout automatique des crédits lors de la validation
+        })
+        .where(eq(users.id, id));
+        
+      return NextResponse.json({ message: "Utilisateur validé et 31 crédits ajoutés" });
     } 
     
     if (action === "reject") {
       await db.delete(users).where(eq(users.id, id));
       return NextResponse.json({ message: "Utilisateur supprimé" });
     }
+    
+    return NextResponse.json({ error: "Action non reconnue" }, { status: 400 });
   } catch (error) {
     return NextResponse.json({ error: "Erreur lors de la mise à jour" }, { status: 500 });
   }
