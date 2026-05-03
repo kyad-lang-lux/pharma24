@@ -1,10 +1,28 @@
 "use client";
 import React from 'react';
 import Link from 'next/link';
+// 1. Ajoutez les imports nécessaires
+import { useEffect, useState } from 'react';
 
 export default function DashboardHome() {
-  const nomPharmacie = "Pharmacie Saint Paul"; // Dynamique plus tard
+  // 2. Remplacez la variable statique par un état
+  const [nomPharmacie, setNomPharmacie] = useState("Chargement...");
 
+  // 3. Ajoutez le useEffect pour récupérer le nom au chargement
+  useEffect(() => {
+    async function fetchUserNom() {
+      try {
+        const res = await fetch('/api/auth/me'); // Une route simple qui renvoie les infos du user connecté
+        if (res.ok) {
+          const data = await res.json();
+          setNomPharmacie(data.nom || "Ma Pharmacie");
+        }
+      } catch (error) {
+        setNomPharmacie("Ma Pharmacie");
+      }
+    }
+    fetchUserNom();
+  }, []);
   const menuItems = [
     {
       title: "Ma Pharmacie",
@@ -30,7 +48,7 @@ export default function DashboardHome() {
     },
     {
   title: "Rapports & Statistiques",
-  desc: "Consultez vos rapports d'activité, analysez vos statistiques de visibilité et exportez vos données.",
+  desc: "Consultez vos rapports d'activité, analysez vos statistiques de visibilité.",
   link: "/rapports",
   icon: "fa fa-chart-pie",
   color: "#3b82f6" // Bleu pour le côté analytique

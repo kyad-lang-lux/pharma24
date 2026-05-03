@@ -947,3 +947,12 @@ input:checked + .slider:before { transform: translateX(20px); }
   border-radius: 16px;
   border-left: 5px solid #6366f1;
 }
+
+
+/* Pour s'assurer que l'icône et le texte sont bien alignés */
+.btn-primary-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Espace entre le loader et le texte */
+}
