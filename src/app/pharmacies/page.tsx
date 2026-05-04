@@ -419,9 +419,17 @@ export default function PharmaciesPage() {
                       <a href={`https://wa.me/${pharma.whatsapp}`} target="_blank" className="btn-action whatsapp">
                         <i className="fa-brands fa-whatsapp"></i> WhatsApp
                       </a>
-                      <button className="btn-action maps" onClick={() => alert('Lien bientôt disponible')}>
-                        <i className="fa-solid fa-location-arrow"></i> Itinéraire
-                      </button>
+                      {/* À remplacer dans le card-footer */}
+<a 
+  href={pharma.googleMapsLink || "#"} 
+  target="_blank" 
+  rel="noopener noreferrer"
+  className={`btn-action maps ${!pharma.googleMapsLink ? 'disabled' : ''}`}
+  onClick={(e) => !pharma.googleMapsLink && e.preventDefault()}
+  style={{ opacity: pharma.googleMapsLink ? 1 : 0.5, cursor: pharma.googleMapsLink ? 'pointer' : 'not-allowed' }}
+>
+  <i className="fa-solid fa-location-arrow"></i> Itinéraire
+</a>
                     </div>
                   </div>
                 );

@@ -1084,3 +1084,12 @@ input:checked + .slider:before { transform: translateX(20px); }
     padding: 2px 8px;
   }
 }
+
+
+.btn-action.maps.disabled {
+  background-color: #e2e8f0 !important;
+  color: #94a3b8 !important;
+  border-color: #e2e8f0 !important;
+  pointer-events: none;
+}
+

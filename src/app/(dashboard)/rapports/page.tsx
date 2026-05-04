@@ -48,6 +48,8 @@ export default function RapportPage() {
         ))}
       </div>
 
+
+
       {/* Graphique Linéaire Analytics */}
       <div className="analytics-container">
         <div className="chart-header">

@@ -243,7 +243,7 @@ export default function MaPharmacie() {
 
 // Petit effet pour faire disparaître le popup après 3 secondes
 useEffect(() => {
-  if (toast) {
+  if (toast) { 
     const timer = setTimeout(() => setToast(null), 3000);
     return () => clearTimeout(timer);
   }
@@ -259,6 +259,7 @@ useEffect(() => {
     telephone: "",
     whatsapp: "",
     momo: "",
+    googleMapsLink: "", // <--- Ajoute ceci
     isOpen: true
   });
 
@@ -398,6 +399,24 @@ useEffect(() => {
               <input type="text" className="db-input" value={form.momo} onChange={(e) => setForm({...form, momo: e.target.value})} />
             </div>
           </div>
+          <div className="form-row">
+  <div className="input-group">
+    <label>Lien Google Maps (Itinéraire)</label>
+    <div className="time-input"> {/* On réutilise la classe time-input pour l'icône */}
+      <input 
+        type="url" 
+        className="db-input" 
+        placeholder="https://goo.gl/maps/..."
+        value={form.googleMapsLink} 
+        onChange={(e) => setForm({...form, googleMapsLink: e.target.value})} 
+      />
+      <i className="fa-solid fa-location-dot"></i>
+    </div>
+    <p style={{ fontSize: '0.75rem', color: '#64748b', marginTop: '5px' }}>
+      Collez ici le lien "Partager" depuis Google Maps.
+    </p>
+  </div>
+</div>
 
           <div className="toggle-container">
             <span>Pharmacie ouverte</span>

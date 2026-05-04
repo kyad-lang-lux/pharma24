@@ -19,7 +19,7 @@ export async function GET() {
       let pharma = acc.find((item) => item.id === p.id);
       if (!pharma) {
         pharma = { ...p, horaires: [] };
-        acc.push(pharma);
+        acc.push(pharma); 
       }
       
       if (h) {

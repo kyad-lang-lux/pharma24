@@ -23,6 +23,7 @@ export const pharmacies = sqliteTable("pharmacies", {
   whatsapp: text("whatsapp"),
   momo: text("momo"),
   isOpen: integer("is_open", { mode: "boolean" }).default(true),
+  googleMapsLink: text("google_maps_link"),
 });
 
 export const horairesGarde = sqliteTable("horaires_garde", {
