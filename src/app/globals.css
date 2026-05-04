@@ -1234,10 +1234,11 @@ padding: 8px 12px;
   padding: 10px 0;
   background-color: #fcfdfe;
   min-height: 100vh;
+
 }
 
 .container-small {
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 100px;
 }
@@ -1358,11 +1359,11 @@ padding: 8px 12px;
 /* Mobile */
 @media (max-width: 768px) {
   .legal-page {
-    padding: 60px 0;
+    padding: 20px 0;
   }
   
   .legal-header h1 {
-    font-size: 32px;
+    font-size: 31px;
   }
   
   .legal-content {
@@ -1372,6 +1373,11 @@ padding: 8px 12px;
   .pricing-mini-grid {
     grid-template-columns: 1fr;
   }
+  .container-small {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 8px;
+}
 }
 
 
