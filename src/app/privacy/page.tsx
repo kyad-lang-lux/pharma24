@@ -124,6 +124,12 @@ export default function PrivacyPage() {
           </section>
         </div>
       </div>
+
+      <div className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+  {/* <i className='bx bx-shape-triangle'></i> */}
+  <i className="fa-solid fa-play triangle-up"></i>
+</div>
+
     </main>
   );
 }
