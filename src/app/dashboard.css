@@ -796,13 +796,20 @@ input:checked + .slider:before { transform: translateX(20px); }
   .pharma-card { padding: 16px; }
 }
 
-.reports-wrapper { padding: 20px 0; }
 
+.reports-wrapper { padding: 0px 0; }
+.reports-header h1 {
+  font-size: 1.7rem;
+}
+.reports-header p{
+  /* text-align: center; */
+  margin-bottom: 20px;
+}
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .stat-card {
@@ -825,6 +832,8 @@ input:checked + .slider:before { transform: translateX(20px); }
   font-size: 0.85rem;
   font-weight: 700;
 }
+
+
 
 /* Container du Graphique */
 .analytics-container {
@@ -865,7 +874,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 .badge-trend {
   background: #ecfdf5;
-  color: #10b981;
+  color: #157F3C;
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 0.85rem;
@@ -909,7 +918,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 .chart-point {
   fill: white;
-  stroke: #10b981;
+  stroke: #157F3C;
   stroke-width: 3;
   cursor: pointer;
   transition: r 0.2s;
@@ -917,7 +926,7 @@ input:checked + .slider:before { transform: translateX(20px); }
 
 .chart-point.active {
   r: 8;
-  fill: #10b981;
+  fill: #157F3C;
 }
 
 .chart-tooltip-bubble {
@@ -955,4 +964,123 @@ input:checked + .slider:before { transform: translateX(20px); }
   align-items: center;
   justify-content: center;
   gap: 8px; /* Espace entre le loader et le texte */
+}
+
+
+/* Responsive pour les Stats Cards */
+@media (max-width: 768px) {
+  .stats-grid {
+    /* On passe sur une seule colonne bien centrée sur mobile */
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+.reports-header h1 {
+  font-size: 1.7rem;
+  text-align: center;
+}
+.reports-header p{
+  text-align: start;
+  margin-bottom: 20px;
+}
+  .stat-card {
+    /* Centre le contenu de la carte */
+    flex-direction: column; 
+    text-align: center;
+    padding: 20px;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  .stat-val-row {
+    /* Centre les chiffres et les tendances */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  /* Si tu as des icônes dans tes cartes, on s'assure qu'elles sont centrées */
+  .stat-card i, .stat-card .icon-wrapper {
+    margin: 0 auto;
+  }
+
+  .stat-trend {
+    font-size: 0.8rem;
+  }
+}
+
+/* Ajustement pour les tablettes (optionnel) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 colonnes sur tablette */
+  }
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .analytics-container {
+    padding: 10px; /* Moins de padding sur les côtés */
+    border-radius: 16px;
+  }
+
+  .analytics-container .chart-header {
+    flex-direction: column; /* On empile le texte et les boutons */
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+
+   .analytics-container .main-stat .number {
+    font-size: 1.7rem; /* Taille de police réduite pour mobile */
+  }
+
+   .analytics-container .main-stat {
+    gap: 10px;
+  }
+
+  /* Rendre les boutons de période scrollables horizontalement si besoin */
+  .analytics-container .chart-periods {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Cache la scrollbar sur Firefox */
+  }
+
+  .analytics-container .chart-periods::-webkit-scrollbar {
+    display: none; /* Cache la scrollbar sur Chrome/Safari */
+  }
+
+  .analytics-container .chart-periods button {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    flex: 1; /* Les boutons prennent la même largeur si possible */
+  }
+
+  /* Ajustement de l'axe X (les dates) */
+  .analytics-container .chart-x-axis {
+    padding: 0 6px;
+    font-size: 0.75rem; /* Texte plus petit pour les jours */
+  }
+
+  .analytics-container .line-chart-svg {
+    height: 180px; /* Hauteur réduite pour mobile */
+  }
+
+  .analytics-container .insights-card {
+    padding: 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Très petits écrans (iPhone SE, etc.) */
+@media (max-width: 480px) {
+  .main-stat .number {
+    font-size: 1.4rem;
+  }
+  
+  .badge-trend {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+  }
 }

@@ -6,7 +6,7 @@ export default function RapportPage() {
 
   const stats = [
     { label: "Vues de la fiche", value: "1 240", icon: "fa-solid fa-eye", color: "#6366f1", trend: "+ 12.5%" },
-    { label: "Appels lancés", value: "85", icon: "fa-solid fa-phone", color: "#10b981", trend: "+ 5.2%" },
+    { label: "Appels lancés", value: "85", icon: "fa-solid fa-phone", color: "#157F3C", trend: "+ 5.2%" },
     { label: "Itinéraires Maps", value: "142", icon: "fa-solid fa-location-dot", color: "#f59e0b", trend: "+ 8.1%" },
   ];
 
@@ -41,7 +41,7 @@ export default function RapportPage() {
               <span className="stat-label">{stat.label}</span>
               <div className="stat-val-row">
                 <h2 className="stat-value">{stat.value}</h2>
-                <span className="stat-trend" style={{ color: '#10b981' }}>{stat.trend}</span>
+                <span className="stat-trend" style={{ color: '#157F3C' }}>{stat.trend}</span>
               </div>
             </div>
           </div>
@@ -54,15 +54,15 @@ export default function RapportPage() {
           <div className="chart-period-text">
             <strong>7 derniers jours</strong> <span style={{ color: '#64748b', marginLeft: '8px' }}>(lun 27 avril - dim 3 mai)</span>
           </div>
-        </div>
+        </div> 
 
         <div className="chart-visual-wrapper">
           <svg viewBox="0 0 700 200" className="line-chart-svg" preserveAspectRatio="none">
             {/* Dégradé sous la courbe */}
             <defs>
               <linearGradient id="lineGradient" x1="0" x2="0" y1="0" y2="1">
-                <stop offset="0%" stopColor="#10b981" stopOpacity="0.2" />
-                <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                <stop offset="0%" stopColor="#157F3C" stopOpacity="0.2" />
+                <stop offset="100%" stopColor="#157F3C" stopOpacity="0" />
               </linearGradient>
             </defs>
 
@@ -75,7 +75,7 @@ export default function RapportPage() {
             {/* Ligne principale */}
             <polyline
               fill="none"
-              stroke="#10b981"
+              stroke="#157F3C"
               strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -103,7 +103,7 @@ export default function RapportPage() {
                   className="chart-point"
                   onMouseEnter={() => setHoveredIndex(i)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  style={{ fill: hoveredIndex === i ? '#10b981' : '#fff', stroke: '#10b981', strokeWidth: 3 }}
+                  style={{ fill: hoveredIndex === i ? '#157F3C' : '#fff', stroke: '#157F3C', strokeWidth: 3 }}
                 />
               </g>
             ))}

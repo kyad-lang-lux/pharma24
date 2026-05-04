@@ -335,6 +335,7 @@ export default function PharmaciesPage() {
           <h1>Pharmacies de garde</h1>
           <p>Trouvez les pharmacies ouvertes et de garde près de vous au Bénin.</p>
         </header>
+        <br />
 
         <div className="search-section">
           <div className="filter-bar">
