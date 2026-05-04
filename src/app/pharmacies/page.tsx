@@ -1,7 +1,8 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 
+import React, { useState, useEffect } from 'react';
+
+// Tes données BENIN_DATA conservées à l'identique
 const BENIN_DATA = [
   {
     departement: "ATLANTIQUE",
@@ -238,54 +239,70 @@ const BENIN_DATA = [
   },
 ];
 
-const PHARMACIES_MOCK = [
-  {
-    id: 1,
-    nom: "Pharmacie Saint Paul",
-    adresse: "Salamey, Godomey, Abomey-Calavi, Atlantique",
-    departement: "ATLANTIQUE",
-    commune: "Abomey-Calavi",
-    isDeGarde: true,
-    horaireGarde: "08:00:00 — 09:00:00",
-    joursGarde: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-    momo: "0157234689",
-    telephone: "+2290157234689",
-    whatsapp: "2290157234689",
-    mapsLink: "https://maps.app.goo.gl/G4wGGjC6DkHpQDjV8",
-  }
-];
-
 export default function PharmaciesPage() {
+  const [allPharmacies, setAllPharmacies] = useState<any[]>([]);
+  const [filteredResults, setFilteredResults] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
+
   const [filters, setFilters] = useState({
     departement: "",
     commune: "",
     ville: "",
     quartier: ""
   });
-  const checkIfCurrentlyOpen = (horaireGarde: string) => {
-  if (horaireGarde.includes("complète")) return true;
 
-  const now = new Date();
-  const currentTime = now.getHours() * 60 + now.getMinutes();
-
-  // On extrait les heures (ex: "08:00:00 — 20:00:00" -> ["08:00", "20:00"])
-  const times = horaireGarde.split("—").map(t => t.trim());
-  if (times.length !== 2) return false;
-
-  const [startH, startM] = times[0].split(":").map(Number);
-  const [endH, endM] = times[1].split(":").map(Number);
-
-  const startTime = startH * 60 + startM;
-  const endTime = endH * 60 + endM;
-
-  return currentTime >= startTime && currentTime <= endTime;
-};
-
-  const [filteredResults, setFilteredResults] = useState(PHARMACIES_MOCK);
-  const [isSearching, setIsSearching] = useState(false);
-
-  const currentDayIndex = new Date().getDay();
+  const daysFull = ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"];
   const daysShort = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+  const currentDayIndex = new Date().getDay();
+  const currentDayName = daysFull[currentDayIndex];
+
+  // 1. Charger TOUTES les pharmacies au démarrage
+  useEffect(() => {
+    async function fetchAll() {
+      try {
+        const res = await fetch('/api/pharmacie/public');
+        if (res.ok) {
+          const data = await res.json();
+          setAllPharmacies(data);
+          setFilteredResults(data);
+        }
+      } catch (err) {
+        console.error("Erreur chargement pharmacies:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAll();
+  }, []);
+
+  // NOUVELLE LOGIQUE : Vérifie le statut de garde actuel basé sur la table horaires_garde
+  const getGardeInfo = (horaires: any[]) => {
+    const aujourdhui = horaires?.find(h => h.jour === currentDayName);
+    
+    if (!aujourdhui || !aujourdhui.isGarde) {
+      return { active: false, label: "Pas de garde" };
+    }
+
+    if (aujourdhui.isFullDay) {
+      return { active: true, label: "De garde (24h/24)" };
+    }
+
+    // Calcul de l'intervalle horaire
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+    const [startH, startM] = (aujourdhui.heureDebut || "08:00").split(":").map(Number);
+    const [endH, endM] = (aujourdhui.heureFin || "20:00").split(":").map(Number);
+    
+    const startTime = startH * 60 + startM;
+    const endTime = endH * 60 + endM;
+
+    if (currentTime >= startTime && currentTime <= endTime) {
+      return { active: true, label: `De garde (${aujourdhui.heureDebut} — ${aujourdhui.heureFin})` };
+    }
+
+    return { active: false, label: `Garde terminée (${aujourdhui.heureFin})` };
+  };
 
   // Données pour les selects en cascade
   const selectedDept = BENIN_DATA.find(d => d.departement === filters.departement);
@@ -295,19 +312,17 @@ export default function PharmaciesPage() {
   const selectedVille = villes.find(v => v.nom === filters.ville);
   const quartiers = selectedVille ? selectedVille.quartiers : [];
 
-  // Fonction de recherche
+  // 2. Fonction de filtrage
   const handleSearch = () => {
     setIsSearching(true);
-    
-    // Simulation d'un petit délai pour l'effet visuel
     setTimeout(() => {
-      const results = PHARMACIES_MOCK.filter(pharma => {
+      const results = allPharmacies.filter(pharma => {
         const matchDept = filters.departement ? pharma.departement === filters.departement : true;
         const matchCommune = filters.commune ? pharma.commune === filters.commune : true;
-        // Ajoute ici tes autres logiques de filtrage si nécessaire
-        return matchDept && matchCommune;
+        const matchVille = filters.ville ? pharma.ville === filters.ville : true;
+        const matchQuartier = filters.quartier ? pharma.quartier === filters.quartier : true;
+        return matchDept && matchCommune && matchVille && matchQuartier;
       });
-      
       setFilteredResults(results);
       setIsSearching(false);
     }, 400);
@@ -319,122 +334,106 @@ export default function PharmaciesPage() {
         <header className="page-header">
           <h1>Pharmacies de garde</h1>
           <p>Trouvez les pharmacies ouvertes et de garde près de vous au Bénin.</p>
-          <br /> 
         </header>
 
         <div className="search-section">
           <div className="filter-bar">
-            <select 
-              value={filters.departement} 
-              onChange={(e) => setFilters({departement: e.target.value, commune: "", ville: "", quartier: ""})}
-            >
+            <select value={filters.departement} onChange={(e) => setFilters({departement: e.target.value, commune: "", ville: "", quartier: ""})}>
               <option value="">Département</option>
               {BENIN_DATA.map(d => <option key={d.departement} value={d.departement}>{d.departement}</option>)}
             </select>
 
-            <select 
-              value={filters.commune} 
-              disabled={!filters.departement}
-              onChange={(e) => setFilters({...filters, commune: e.target.value, ville: "", quartier: ""})}
-            >
+            <select value={filters.commune} disabled={!filters.departement} onChange={(e) => setFilters({...filters, commune: e.target.value, ville: "", quartier: ""})}>
               <option value="">Commune</option>
               {communes.map(c => <option key={c.nom} value={c.nom}>{c.nom}</option>)}
             </select>
 
-            <select 
-              value={filters.ville} 
-              disabled={!filters.commune}
-              onChange={(e) => setFilters({...filters, ville: e.target.value, quartier: ""})}
-            >
+            <select value={filters.ville} disabled={!filters.commune} onChange={(e) => setFilters({...filters, ville: e.target.value, quartier: ""})}>
               <option value="">Ville</option>
               {villes.map(v => <option key={v.nom} value={v.nom}>{v.nom}</option>)}
             </select>
 
-            <select 
-              value={filters.quartier} 
-              disabled={!filters.ville}
-              onChange={(e) => setFilters({...filters, quartier: e.target.value})}
-            >
+            <select value={filters.quartier} disabled={!filters.ville} onChange={(e) => setFilters({...filters, quartier: e.target.value})}>
               <option value="">Quartier</option>
               {quartiers.map(q => <option key={q} value={q}>{q}</option>)}
             </select>
           </div>
 
-          <button 
-            onClick={handleSearch} 
-            className="btn-search shine-effect"
-            disabled={isSearching}
-          >
-            {isSearching ? ( 
-              <><i className="fa-solid fa-spinner fa-spin"></i> Recherche...</>
-            ) : (
-              <><i className="fa-solid fa-magnifying-glass"></i> Rechercher</>
-            )}
+          <button onClick={handleSearch} className="btn-search shine-effect" disabled={isSearching || loading}>
+            {isSearching ? <><i className="fa-solid fa-spinner fa-spin"></i> Recherche...</> : <><i className="fa-solid fa-magnifying-glass"></i> Rechercher</>}
           </button>
         </div>
 
-        <div className="pharmacy-grid">
-          {filteredResults.length > 0 ? (
-            filteredResults.map((pharma) => (
-              <div key={pharma.id} className="pharmacy-card">
-                <div className="card-top">
-                  <div className="pharma-info">
-                    <h3>{pharma.nom}</h3>
-                    <p className="address">
-                      <i className="fa-solid fa-location-dot"></i> {pharma.adresse}
-                    </p>
-                  </div>
-                  <div className="pharma-badges">
-  {pharma.isDeGarde && checkIfCurrentlyOpen(pharma.horaireGarde) ? (
-    <span className="badge-garde">de garde</span>
-  ) : (
-    <span className="badge-not-garde">pas de garde</span>
-  )}
-  
-</div>
-                </div>
+        {loading ? (
+          <div className="loading-state" style={{ textAlign: 'center', padding: '50px' }}>
+            <i className="fa-solid fa-spinner fa-spin fa-3x" style={{ color: '#157F3C' }}></i>
+            <p>Chargement des pharmacies...</p>
+          </div>
+        ) : (
+          <div className="pharmacy-grid">
+            {filteredResults.length > 0 ? (
+              filteredResults.map((pharma) => {
+                const garde = getGardeInfo(pharma.horaires);
+                return (
+                  <div key={pharma.id} className="pharmacy-card">
+                    <div className="card-top">
+                      <div className="pharma-info">
+                        <h3>{pharma.nom}</h3>
+                        <p className="address">
+                          <i className="fa-solid fa-location-dot"></i> {pharma.quartier}, {pharma.ville}, {pharma.commune}
+                        </p>
+                      </div>
+                      <div className="pharma-badges">
+                        <span className={garde.active ? "badge-garde" : "badge-not-garde"}>
+                          {garde.active ? "de garde" : "pas de garde"}
+                        </span>
+                      </div>
+                    </div>
 
-                <div className="card-body">
-                  <p className="garde-time">
-                    <i className="fa-regular fa-clock"></i> {pharma.horaireGarde.includes('complète') ? 'De garde (journée complète)' : `De garde (${pharma.horaireGarde})`}
-                  </p>
-                  
-                  <div className="days-list">
-                    {daysShort.map((day, idx) => (
-                      <span 
-                        key={day} 
-                        className={`day-item ${idx === currentDayIndex ? 'current' : ''}`}
-                      >
-                        {day}
-                      </span>
-                    ))}
-                  </div>
+                    <div className="card-body">
+                      <p className="garde-time">
+                        <i className="fa-regular fa-clock"></i> {garde.label}
+                      </p>
 
-                  <div className="momo-box">
-                    <i className="fa-solid fa-money-bill-transfer"></i> MoMo : {pharma.momo}
-                  </div>
-                </div>
+                      <div className="days-list">
+                        {daysShort.map((day, idx) => {
+                          const isGardeOnThisDay = pharma.horaires?.find((h: any) => h.jour === daysFull[idx] && h.isGarde);
+                          return (
+                            <span key={day} className={`day-item ${idx === currentDayIndex ? 'current' : ''} ${isGardeOnThisDay ? 'highlight' : ''}`}>
+                              {day}
+                            </span>
+                          );
+                        })}
+                      </div>
 
-                <div className="card-footer">
-                  <a href={`tel:${pharma.telephone}`} className="btn-action call">
-                    <i className="fa-solid fa-phone"></i> Appeler
-                  </a>
-                  <a href={`https://wa.me/${pharma.whatsapp}`} target="_blank" className="btn-action whatsapp">
-                    <i className="fa-brands fa-whatsapp"></i> WhatsApp
-                  </a>
-                  <a href={pharma.mapsLink} target="_blank" className="btn-action maps">
-                    <i className="fa-solid fa-location-arrow"></i> Itinéraire
-                  </a>
-                </div>
+                      <div className="momo-box">
+                        <i className="fa-solid fa-money-bill-transfer"></i> MoMo : {pharma.momo || 'N/A'}
+                      </div>
+                    </div>
+
+                    <div className="card-footer">
+                      <a href={`tel:${pharma.telephone}`} className="btn-action call">
+                        <i className="fa-solid fa-phone"></i> Appeler
+                      </a>
+                      <a href={`https://wa.me/${pharma.whatsapp}`} target="_blank" className="btn-action whatsapp">
+                        <i className="fa-brands fa-whatsapp"></i> WhatsApp
+                      </a>
+                      <button className="btn-action maps" onClick={() => alert('Lien bientôt disponible')}>
+                        <i className="fa-solid fa-location-arrow"></i> Itinéraire
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="no-results" style={{ gridColumn: '1/-1', textAlign: 'center', padding: '40px' }}>
+                <i className="fa-solid fa-face-frown fa-3x" style={{ color: '#cbd5e1' }}></i>
+                <p>Aucune pharmacie trouvée pour cette sélection.</p>
+                <button onClick={() => setFilteredResults(allPharmacies)} style={{ color: '#157F3C', cursor: 'pointer', background: 'none', border: 'none', textDecoration: 'underline' }}>Voir tout</button>
               </div>
-            ))
-          ) : (
-            <div className="no-results">
-              <i className="fa-solid fa-face-frown"></i>
-              <p>Aucune pharmacie trouvée pour cette sélection.</p>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </main>
   );
