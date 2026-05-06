@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-
+import { useRouter } from 'next/navigation';
 // Bloc de données structuré selon la hiérarchie du Bénin
 const BENIN_DATA = [
   {
@@ -245,6 +245,21 @@ export default function HomePage() {
   const [selVille, setSelVille] = useState("");
   const [selQuartier, setSelQuartier] = useState("");
 
+
+  const router = useRouter();
+
+const handleFinalSearch = () => {
+  // On construit l'URL avec les paramètres choisis
+  const params = new URLSearchParams();
+  if (selDept) params.append("dept", selDept);
+  if (selCommune) params.append("commune", selCommune);
+  if (selVille) params.append("ville", selVille);
+  if (selQuartier) params.append("quartier", selQuartier);
+
+  // Redirection vers la page pharmacies
+  router.push(`/pharmacies?${params.toString()}`);
+};
+
   // Options filtrées
   const currentDept = BENIN_DATA.find((d) => d.departement === selDept);
   const currentCommune = currentDept?.communes.find(
@@ -271,6 +286,8 @@ export default function HomePage() {
 
   return () => observer.disconnect(); // Nettoyage
 }, []);
+
+
 
   return (
     <main>
@@ -446,10 +463,16 @@ export default function HomePage() {
               </div>
             </div>
 
-            <button className="btn-search-submit" disabled={!selDept}>
-              <i className="fa-solid fa-location-crosshairs"></i>
-              Trouver une pharmacie
-            </button>
+            <button 
+  className="btn-search-submit" 
+  disabled={!selDept}
+  onClick={handleFinalSearch} // Ajoute ceci
+>
+  <i className="fa-solid fa-location-crosshairs"></i>
+  Trouver une pharmacie
+</button>
+
+
           </div>
         </div>
       </section>

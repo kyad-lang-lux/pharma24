@@ -1,8 +1,10 @@
 "use client";
+import { useSearchParams } from 'next/navigation';
 
 import React, { useState, useEffect } from 'react';
 
-// Tes données BENIN_DATA conservées à l'identique
+// Tes données BENIN_DATA (Gardées intactes comme demandé)
+
 const BENIN_DATA = [
   {
     departement: "ATLANTIQUE",
@@ -245,6 +247,8 @@ export default function PharmaciesPage() {
   const [loading, setLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
 
+  const searchParams = useSearchParams();
+
   const [filters, setFilters] = useState({
     departement: "",
     commune: "",
@@ -257,7 +261,20 @@ export default function PharmaciesPage() {
   const currentDayIndex = new Date().getDay();
   const currentDayName = daysFull[currentDayIndex];
 
-  // 1. Charger TOUTES les pharmacies au démarrage
+  // --- FONCTION DE TRACKING ---
+  const trackAction = async (pharmaId: number, type: 'vue' | 'appel' | 'maps') => {
+    try {
+      await fetch('/api/stats/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pharmacieId: pharmaId, type })
+      });
+    } catch (err) {
+      console.error("Erreur de tracking:", err);
+    }
+  };
+
+  // 1. Charger TOUTES les pharmacies au démarrage + Tracker les VUES
   useEffect(() => {
     async function fetchAll() {
       try {
@@ -266,6 +283,9 @@ export default function PharmaciesPage() {
           const data = await res.json();
           setAllPharmacies(data);
           setFilteredResults(data);
+
+          // Tracker la vue pour chaque pharmacie affichée au chargement
+          data.forEach((p: any) => trackAction(p.id, 'vue'));
         }
       } catch (err) {
         console.error("Erreur chargement pharmacies:", err);
@@ -276,35 +296,24 @@ export default function PharmaciesPage() {
     fetchAll();
   }, []);
 
-  // NOUVELLE LOGIQUE : Vérifie le statut de garde actuel basé sur la table horaires_garde
   const getGardeInfo = (horaires: any[]) => {
     const aujourdhui = horaires?.find(h => h.jour === currentDayName);
-    
-    if (!aujourdhui || !aujourdhui.isGarde) {
-      return { active: false, label: "Pas de garde" };
-    }
+    if (!aujourdhui || !aujourdhui.isGarde) return { active: false, label: "Pas de garde" };
+    if (aujourdhui.isFullDay) return { active: true, label: "De garde (24h/24)" };
 
-    if (aujourdhui.isFullDay) {
-      return { active: true, label: "De garde (24h/24)" };
-    }
-
-    // Calcul de l'intervalle horaire
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
     const [startH, startM] = (aujourdhui.heureDebut || "08:00").split(":").map(Number);
     const [endH, endM] = (aujourdhui.heureFin || "20:00").split(":").map(Number);
-    
     const startTime = startH * 60 + startM;
     const endTime = endH * 60 + endM;
 
     if (currentTime >= startTime && currentTime <= endTime) {
       return { active: true, label: `De garde (${aujourdhui.heureDebut} — ${aujourdhui.heureFin})` };
     }
-
     return { active: false, label: `Garde terminée (${aujourdhui.heureFin})` };
   };
 
-  // Données pour les selects en cascade
   const selectedDept = BENIN_DATA.find(d => d.departement === filters.departement);
   const communes = selectedDept ? selectedDept.communes : [];
   const selectedCommune = communes.find(c => c.nom === filters.commune);
@@ -312,7 +321,6 @@ export default function PharmaciesPage() {
   const selectedVille = villes.find(v => v.nom === filters.ville);
   const quartiers = selectedVille ? selectedVille.quartiers : [];
 
-  // 2. Fonction de filtrage
   const handleSearch = () => {
     setIsSearching(true);
     setTimeout(() => {
@@ -328,6 +336,38 @@ export default function PharmaciesPage() {
     }, 400);
   };
 
+  useEffect(() => {
+    // 1. On récupère les valeurs de l'URL
+    const dept = searchParams.get("dept") || "";
+    const commune = searchParams.get("commune") || "";
+    const ville = searchParams.get("ville") || "";
+    const quartier = searchParams.get("quartier") || "";
+
+    // 2. On met à jour les filtres de la page
+    if (dept) {
+      setFilters({
+        departement: dept,
+        commune: commune,
+        ville: ville,
+        quartier: quartier
+      });
+
+      // 3. On déclenche le filtrage automatique sur les données chargées
+      // Si allPharmacies est déjà chargé, on filtre
+      if (allPharmacies.length > 0) {
+        const results = allPharmacies.filter(pharma => {
+          const matchDept = dept ? pharma.departement === dept : true;
+          const matchCommune = commune ? pharma.commune === commune : true;
+          const matchVille = ville ? pharma.ville === ville : true;
+          const matchQuartier = quartier ? pharma.quartier === quartier : true;
+          return matchDept && matchCommune && matchVille && matchQuartier;
+        });
+        setFilteredResults(results);
+      }
+    }
+  }, [searchParams, allPharmacies]); // S'exécute quand l'URL change ou quand les données arrivent
+
+  
   return (
     <main className="pharmacy-page">
       <div className="container">
@@ -343,20 +383,17 @@ export default function PharmaciesPage() {
               <option value="">Département</option>
               {BENIN_DATA.map(d => <option key={d.departement} value={d.departement}>{d.departement}</option>)}
             </select>
-
             <select value={filters.commune} disabled={!filters.departement} onChange={(e) => setFilters({...filters, commune: e.target.value, ville: "", quartier: ""})}>
               <option value="">Commune</option>
               {communes.map(c => <option key={c.nom} value={c.nom}>{c.nom}</option>)}
             </select>
-
             <select value={filters.ville} disabled={!filters.commune} onChange={(e) => setFilters({...filters, ville: e.target.value, quartier: ""})}>
               <option value="">Ville</option>
               {villes.map(v => <option key={v.nom} value={v.nom}>{v.nom}</option>)}
             </select>
-
             <select value={filters.quartier} disabled={!filters.ville} onChange={(e) => setFilters({...filters, quartier: e.target.value})}>
               <option value="">Quartier</option>
-              {quartiers.map(q => <option key={q} value={q}>{q}</option>)}
+               {quartiers.map(q => <option key={q} value={q}>{q}</option>)}
             </select>
           </div>
 
@@ -413,23 +450,41 @@ export default function PharmaciesPage() {
                     </div>
 
                     <div className="card-footer">
-                      <a href={`tel:${pharma.telephone}`} className="btn-action call">
+                      {/* BOUTON APPEL AVEC TRACKING */}
+                      <a 
+                        href={`tel:+229${pharma.telephone}`} 
+                        className="btn-action call"
+                        onClick={() => trackAction(pharma.id, 'appel')}
+                      >
                         <i className="fa-solid fa-phone"></i> Appeler
                       </a>
-                      <a href={`https://wa.me/${pharma.whatsapp}`} target="_blank" className="btn-action whatsapp">
+
+                      <a 
+                        href={`https://wa.me/229${pharma.whatsapp?.replace(/\s+/g, '')}`} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="btn-action whatsapp"
+                      >
                         <i className="fa-brands fa-whatsapp"></i> WhatsApp
                       </a>
-                      {/* À remplacer dans le card-footer */}
-<a 
-  href={pharma.googleMapsLink || "#"} 
-  target="_blank" 
-  rel="noopener noreferrer"
-  className={`btn-action maps ${!pharma.googleMapsLink ? 'disabled' : ''}`}
-  onClick={(e) => !pharma.googleMapsLink && e.preventDefault()}
-  style={{ opacity: pharma.googleMapsLink ? 1 : 0.5, cursor: pharma.googleMapsLink ? 'pointer' : 'not-allowed' }}
->
-  <i className="fa-solid fa-location-arrow"></i> Itinéraire
-</a>
+
+                      {/* BOUTON MAPS AVEC TRACKING */}
+                      <a 
+                        href={pharma.googleMapsLink || "#"} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={`btn-action maps ${!pharma.googleMapsLink ? 'disabled' : ''}`}
+                        onClick={(e) => {
+                          if (!pharma.googleMapsLink) {
+                            e.preventDefault();
+                          } else {
+                            trackAction(pharma.id, 'maps');
+                          }
+                        }}
+                        style={{ opacity: pharma.googleMapsLink ? 1 : 0.5, cursor: pharma.googleMapsLink ? 'pointer' : 'not-allowed' }}
+                      >
+                        <i className="fa-solid fa-location-arrow"></i> Itinéraire
+                      </a>
                     </div>
                   </div>
                 );

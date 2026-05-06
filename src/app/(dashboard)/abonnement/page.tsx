@@ -121,7 +121,7 @@ export default function AbonnementPage() {
           <div className="benefit-item"><i className="fa-solid fa-circle-check"></i> Localisation sur la carte interactive</div>
           <div className="benefit-item"><i className="fa-solid fa-circle-check"></i> Visibilité auprès de milliers de patients</div>
           <div className="benefit-item"><i className="fa-solid fa-circle-check"></i> Statut Ouvert / De garde en temps réel</div>
-          <div className="benefit-item"><i className="fa-solid fa-circle-check"></i> Compteur de vues sur votre fiche</div>
+          {/* <div className="benefit-item"><i className="fa-solid fa-circle-check"></i> Compteur de vues sur votre fiche</div> */}
           <div className="benefit-item"><i className="fa-solid fa-circle-check"></i> Support technique dédié</div>
         </div>
 
@@ -144,10 +144,9 @@ export default function AbonnementPage() {
       </div>
 
       {/* Section Historique des factures */}
-      <div className="sub-benefits-card mt-20">
+      {/* <div className="sub-benefits-card mt-20">
         <h3><i className="fa-solid fa-file-invoice"></i> Historique des transactions</h3>
         <div className="invoice-list" style={{ marginTop: '15px' }}>
-          {/* Si pas de transactions, afficher un message, sinon lister ici */}
           <div className="invoice-item" style={{ 
             display: 'flex', 
             justifyContent: 'space-between', 
@@ -165,7 +164,7 @@ export default function AbonnementPage() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   ); 
 }

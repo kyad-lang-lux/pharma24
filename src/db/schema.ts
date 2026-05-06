@@ -35,3 +35,10 @@ export const horairesGarde = sqliteTable("horaires_garde", {
   heureDebut: text("heure_debut").default("08:00"),
   heureFin: text("heure_fin").default("20:00"),
 });
+
+export const statsPharmacie = sqliteTable("stats_pharmacie", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  pharmacieId: integer("pharmacie_id").notNull(),
+  type: text("type").notNull(), // 'vue', 'appel', 'maps'
+  createdAt: text("created_at").notNull(), // format YYYY-MM-DD
+});

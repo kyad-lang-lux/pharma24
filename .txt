@@ -834,3 +834,15 @@ filteredResults.map((pharma) => (
 );
 
 }
+
+
+
+
+
+
+
+
+
+
+
+Maintenant, je veux qu'on travailler sur la page des rappots. Quand tu vas analyser le code du front, tu vas remrquer qu'on doit récolter le nombre de Vues de la fiche( à chaque fois que la fiche apparait sur la plateforme quand quelqu'un vas sur le site,) Appels lancés( à chaque fois que quelqu'un  appuis sur le boutton appel  pour appeler la pharmacie, ) Itinéraires Maps ( à chqeuq fois qu'il appuis sur le boutton googlr maps), et pour finir, les 7 derniers jours (lun 27 avril - dim 3 mai) .: 
