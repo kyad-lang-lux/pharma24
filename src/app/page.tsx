@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 // Bloc de données structuré selon la hiérarchie du Bénin
@@ -287,8 +287,42 @@ const handleFinalSearch = () => {
   return () => observer.disconnect(); // Nettoyage
 }, []);
 
+// 1. Tes States
+const [countPharmacies, setCountPharmacies] = useState(0);
+const [countUsers, setCountUsers] = useState(0);
+const [countRating, setCountRating] = useState(0);
+const [hasAnimated, setHasAnimated] = useState(false); // Pour ne l'exécuter qu'une seule fois
 
+useEffect(() => {
+  // Optionnel : Déclencher seulement quand on scrolle sur la section
+  // Si tu préfères au chargement direct, garde juste le contenu du setInterval
+  const targetPharma = 120;
+  const targetUsers = 15000;
+  const targetRating = 4.8;
+  const duration = 2000; 
+  const frameRate = 1000 / 60;
+  const totalFrames = duration / frameRate;
 
+  let frame = 0;
+
+  const counter = setInterval(() => {
+    frame++;
+    const progress = frame / totalFrames;
+
+    // On s'assure de ne jamais dépasser la cible
+    setCountPharmacies(Math.min(Math.floor(targetPharma * progress), targetPharma));
+    setCountUsers(Math.min(Math.floor(targetUsers * progress), targetUsers));
+    setCountRating(parseFloat(Math.min(targetRating * progress, targetRating).toFixed(1)));
+
+    if (frame >= totalFrames) {
+      clearInterval(counter);
+    }
+  }, frameRate);
+
+  return () => clearInterval(counter);
+}, []);
+
+ 
   return (
     <main>
       <section className="hero">
@@ -342,7 +376,7 @@ const handleFinalSearch = () => {
           {/* Image et Badges Flottants */}
           <div className="hero-image-wrapper reveal">
             <img
-              src="/img/ima2.jpg"
+              src="/img/ima7.jpg"
               alt="Pharmacien servant un client au Bénin"
               className="main-hero-img"
             />
@@ -478,50 +512,60 @@ const handleFinalSearch = () => {
       </section>
 
       {/* Section Statistiques */}
-<section className="stats-section reveal">
+     <div style={{textAlign: 'center', marginBottom: '40px'}} className="reveal">
+  <span className="badge-light">Pharma24 en chiffres</span>
+  <h1>Notre impact en temps réel</h1>
+  <p style={{color: "#7c7c7c"}}>Grâce à notre réseau en pleine expansion, nous connectons des milliers de citoyens 
+    aux soins de santé essentiels, 24h/24 et 7j/7.</p>
+</div>
+
+<section style={{marginTop:"-60px"}} className="stats-section reveal">
+  
   <div className="container stats-grid">
-    
-    <div className="stat-card reveal reveal-delay-1">
-      <div className="stat-icon-wrapper">
-        <i className="fa-solid fa-location-dot"></i>
-      </div>
-      <div className="stat-content">
-        <span className="stat-number">120+</span>
-        <span className="stat-label">Pharmacies référencées</span>
-      </div>
+  {/* Pharmacies */}
+  <div className="stat-card reveal reveal-delay-1">
+    <div className="stat-icon-wrapper">
+      <i className="fa-solid fa-location-dot"></i>
     </div>
-
-    <div className="stat-card reveal reveal-delay-1">
-      <div className="stat-icon-wrapper">
-        <i className="fa-solid fa-users"></i>
-      </div>
-      <div className="stat-content">
-        <span className="stat-number">15 000+</span>
-        <span className="stat-label">Utilisateurs actifs</span>
-      </div>
+    <div className="stat-content">
+      <span className="stat-number">{countPharmacies}+</span>
+      <span className="stat-label">Pharmacies référencées</span>
     </div>
-
-    <div className="stat-card reveal reveal-delay-1">
-      <div className="stat-icon-wrapper">
-        <i className="fa-solid fa-clock"></i>
-      </div>
-      <div className="stat-content">
-        <span className="stat-number">24/7</span>
-        <span className="stat-label">Service disponible</span>
-      </div>
-    </div>
-
-    <div className="stat-card reveal reveal-delay-1">
-      <div className="stat-icon-wrapper">
-        <i className="fa-solid fa-star"></i>
-      </div>
-      <div className="stat-content">
-        <span className="stat-number">4.8/5</span>
-        <span className="stat-label">Note moyenne</span>
-      </div>
-    </div>
-
   </div>
+
+  {/* Utilisateurs */}
+  <div className="stat-card reveal reveal-delay-1">
+    <div className="stat-icon-wrapper">
+      <i className="fa-solid fa-users"></i>
+    </div>
+    <div className="stat-content">
+      <span className="stat-number">{countUsers.toLocaleString()}+</span>
+      <span className="stat-label">Utilisateurs actifs</span>
+    </div>
+  </div>
+
+  {/* Service 24/7 (Fixe car c'est une durée) */}
+  <div className="stat-card reveal reveal-delay-1">
+    <div className="stat-icon-wrapper">
+      <i className="fa-solid fa-clock"></i>
+    </div>
+    <div className="stat-content">
+      <span className="stat-number">24/7</span>
+      <span className="stat-label">Service disponible</span>
+    </div>
+  </div>
+
+  {/* Note */}
+  <div className="stat-card reveal reveal-delay-1">
+    <div className="stat-icon-wrapper">
+      <i className="fa-solid fa-star"></i>
+    </div>
+    <div className="stat-content">
+      <span className="stat-number">{countRating}/5</span>
+      <span className="stat-label">Note moyenne</span>
+    </div>
+  </div>
+</div>
 </section>
 
 {/* Section Pourquoi Pharma24 - Titre */}
