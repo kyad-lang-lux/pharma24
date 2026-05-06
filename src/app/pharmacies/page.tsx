@@ -1,10 +1,9 @@
 "use client";
+
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-import React, { useState, useEffect } from 'react';
-
-// Tes données BENIN_DATA (Gardées intactes comme demandé)
-
+// Tes données BENIN_DATA (Gardées intactes)
 const BENIN_DATA = [
   {
     departement: "ATLANTIQUE",
@@ -240,8 +239,7 @@ const BENIN_DATA = [
     ],
   },
 ];
-
-export default function PharmaciesPage() {
+function PharmaciesContent() {
   const [allPharmacies, setAllPharmacies] = useState<any[]>([]);
   const [filteredResults, setFilteredResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -261,7 +259,6 @@ export default function PharmaciesPage() {
   const currentDayIndex = new Date().getDay();
   const currentDayName = daysFull[currentDayIndex];
 
-  // --- FONCTION DE TRACKING ---
   const trackAction = async (pharmaId: number, type: 'vue' | 'appel' | 'maps') => {
     try {
       await fetch('/api/stats/track', {
@@ -274,7 +271,6 @@ export default function PharmaciesPage() {
     }
   };
 
-  // 1. Charger TOUTES les pharmacies au démarrage + Tracker les VUES
   useEffect(() => {
     async function fetchAll() {
       try {
@@ -283,8 +279,6 @@ export default function PharmaciesPage() {
           const data = await res.json();
           setAllPharmacies(data);
           setFilteredResults(data);
-
-          // Tracker la vue pour chaque pharmacie affichée au chargement
           data.forEach((p: any) => trackAction(p.id, 'vue'));
         }
       } catch (err) {
@@ -337,13 +331,11 @@ export default function PharmaciesPage() {
   };
 
   useEffect(() => {
-    // 1. On récupère les valeurs de l'URL
     const dept = searchParams.get("dept") || "";
     const commune = searchParams.get("commune") || "";
     const ville = searchParams.get("ville") || "";
     const quartier = searchParams.get("quartier") || "";
 
-    // 2. On met à jour les filtres de la page
     if (dept) {
       setFilters({
         departement: dept,
@@ -352,8 +344,6 @@ export default function PharmaciesPage() {
         quartier: quartier
       });
 
-      // 3. On déclenche le filtrage automatique sur les données chargées
-      // Si allPharmacies est déjà chargé, on filtre
       if (allPharmacies.length > 0) {
         const results = allPharmacies.filter(pharma => {
           const matchDept = dept ? pharma.departement === dept : true;
@@ -365,9 +355,8 @@ export default function PharmaciesPage() {
         setFilteredResults(results);
       }
     }
-  }, [searchParams, allPharmacies]); // S'exécute quand l'URL change ou quand les données arrivent
+  }, [searchParams, allPharmacies]);
 
-  
   return (
     <main className="pharmacy-page">
       <div className="container">
@@ -450,36 +439,20 @@ export default function PharmaciesPage() {
                     </div>
 
                     <div className="card-footer">
-                      {/* BOUTON APPEL AVEC TRACKING */}
-                      <a 
-                        href={`tel:+229${pharma.telephone}`} 
-                        className="btn-action call"
-                        onClick={() => trackAction(pharma.id, 'appel')}
-                      >
+                      <a href={`tel:+229${pharma.telephone}`} className="btn-action call" onClick={() => trackAction(pharma.id, 'appel')}>
                         <i className="fa-solid fa-phone"></i> Appeler
                       </a>
-
-                      <a 
-                        href={`https://wa.me/229${pharma.whatsapp?.replace(/\s+/g, '')}`} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="btn-action whatsapp"
-                      >
+                      <a href={`https://wa.me/229${pharma.whatsapp?.replace(/\s+/g, '')}`} target="_blank" rel="noopener noreferrer" className="btn-action whatsapp">
                         <i className="fa-brands fa-whatsapp"></i> WhatsApp
                       </a>
-
-                      {/* BOUTON MAPS AVEC TRACKING */}
                       <a 
                         href={pharma.googleMapsLink || "#"} 
                         target="_blank" 
-                        rel="noopener noreferrer"
+                        rel="noopener noreferrer" 
                         className={`btn-action maps ${!pharma.googleMapsLink ? 'disabled' : ''}`}
                         onClick={(e) => {
-                          if (!pharma.googleMapsLink) {
-                            e.preventDefault();
-                          } else {
-                            trackAction(pharma.id, 'maps');
-                          }
+                          if (!pharma.googleMapsLink) { e.preventDefault(); } 
+                          else { trackAction(pharma.id, 'maps'); }
                         }}
                         style={{ opacity: pharma.googleMapsLink ? 1 : 0.5, cursor: pharma.googleMapsLink ? 'pointer' : 'not-allowed' }}
                       >
@@ -500,5 +473,18 @@ export default function PharmaciesPage() {
         )}
       </div>
     </main>
+  );
+}
+
+// LA CORRECTION EST ICI : On enveloppe tout dans Suspense pour Vercel
+export default function PharmaciesPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ textAlign: 'center', padding: '100px' }}>
+        <i className="fa-solid fa-spinner fa-spin fa-3x" style={{ color: '#157F3C' }}></i>
+      </div>
+    }>
+      <PharmaciesContent />
+    </Suspense>
   );
 }
