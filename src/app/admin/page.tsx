@@ -140,7 +140,7 @@ export default function AdminPage() {
           <h1>Dashboard Admin</h1>
           <p>Gestion des accès Pharma24</p>
         </div>
-        <div style={{display: 'flex', flexDirection:" column", gap: '10px'}}>
+        <div style={{display: 'flex', flexDirection:"column", gap: '10px'}}>
            <button 
              onClick={() => setShowPosoForm(true)}
              style={{backgroundColor: '#2B8A4E', color: 'white', border: 'none', padding: '10px 15px', borderRadius: '8px', cursor: 'pointer'}}
