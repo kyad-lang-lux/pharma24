@@ -42,3 +42,14 @@ export const statsPharmacie = sqliteTable("stats_pharmacie", {
   type: text("type").notNull(), // 'vue', 'appel', 'maps'
   createdAt: text("created_at").notNull(), // format YYYY-MM-DD
 });
+
+
+export const medicaments = sqliteTable("medicaments", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  nom: text("nom").notNull(),
+  categorie: text("categorie").notNull(),
+  indication: text("indication").notNull(),
+  dosageAdulte: text("dosage_adulte").notNull(),
+  dosageEnfant: text("dosage_enfant").notNull(),
+  precaution: text("precaution").notNull(),
+});

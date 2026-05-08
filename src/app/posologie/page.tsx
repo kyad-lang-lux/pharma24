@@ -1,31 +1,30 @@
 "use client";
-import React, { useState } from 'react';
-
-const MEDICAMENTS_DATA = [
-  {
-    id: 1,
-    nom: "Paracétamol",
-    categorie: "Antalgique / Antipyrétique",
-    indication: "Douleurs légères à modérées (maux de tête, fièvre, douleurs dentaires).",
-    dosageAdulte: "500 mg à 1 g toutes les 4 à 6 heures. Maximum 4 g par jour.",
-    dosageEnfant: "10 à 15 mg/kg toutes les 4 à 6 heures, sans dépasser 60 mg/kg/jour.",
-    precaution: "À éviter en cas d'insuffisance hépatique. Ne pas associer à d'autres produits contenant du paracétamol."
-  },
-  {
-    id: 2,
-    nom: "Ibuprofène",
-    categorie: "Anti-inflammatoire (AINS)",
-    indication: "Fièvre, douleurs, inflammations (règles douloureuses, entorses, maux de dos).",
-    dosageAdulte: "200 à 400 mg toutes les 6 heures. Maximum 1 200 mg par jour sans avis médical.",
-    dosageEnfant: "20 à 30 mg/kg/jour répartis en 3 prises. À partir de 3 mois.",
-    precaution: "Ne pas prendre à jeun. Contre-indiqué en cas d'ulcère, grossesse (3e trimestre), asthme sévère."
-  }
-];
+import React, { useState, useEffect } from 'react';
 
 export default function PosologiePage() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [meds, setMeds] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredMeds = MEDICAMENTS_DATA.filter(med => 
+  // Charger les données depuis Turso via l'API
+  useEffect(() => {
+    async function fetchMeds() {
+      try {
+        const res = await fetch('/api/medicaments');
+        if (res.ok) {
+          const data = await res.json();
+          setMeds(data);
+        }
+      } catch (err) {
+        console.error("Erreur chargement posologies:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMeds();
+  }, []);
+
+  const filteredMeds = meds.filter(med => 
     med.nom.toLowerCase().includes(searchTerm.toLowerCase()) || 
     med.indication.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -53,42 +52,48 @@ export default function PosologiePage() {
           <p>Ces informations sont données à titre indicatif et ne remplacent pas l'avis d'un médecin ou pharmacien. En cas de doute, consultez un professionnel de santé.</p>
         </div>
 
-        <div className="poso-grid">
-          {filteredMeds.map((med) => (
-            <div key={med.id} className="poso-card">
-              <div className="card-header">
-                <div className="med-title">
-                  <span className="icon-pill"><i className="fa-solid fa-capsules"></i></span>
-                  <h3>{med.nom}</h3>
+        {loading ? (
+          <div style={{textAlign: 'center', padding: '40px'}}>
+             <i className="fa-solid fa-spinner fa-spin fa-2x" style={{color: '#157F3C'}}></i>
+          </div>
+        ) : (
+          <div className="poso-grid">
+            {filteredMeds.map((med) => (
+              <div key={med.id} className="poso-card">
+                <div className="card-header">
+                  <div className="med-title">
+                    <span className="icon-pill"><i className="fa-solid fa-capsules"></i></span>
+                    <h3>{med.nom}</h3>
+                  </div>
+                  <span className="med-category">{med.categorie}</span>
                 </div>
-                <span className="med-category">{med.categorie}</span>
-              </div>
 
-              <div className="card-section">
-                <h4>Indication</h4>
-                <p>{med.indication}</p>
-              </div>
-
-              <div className="dosage-container">
-                <div className="dosage-box adult">
-                  <span className="label">ADULTE</span>
-                  <p>{med.dosageAdulte}</p>
+                <div className="card-section">
+                  <h4>Indication</h4>
+                  <p>{med.indication}</p>
                 </div>
-                <div className="dosage-box child">
-                  <span className="label">ENFANT</span>
-                  <p>{med.dosageEnfant}</p>
+
+                <div className="dosage-container">
+                  <div className="dosage-box adult">
+                    <span className="label">ADULTE</span>
+                    <p>{med.dosageAdulte}</p>
+                  </div>
+                  <div className="dosage-box child">
+                    <span className="label">ENFANT</span>
+                    <p>{med.dosageEnfant}</p>
+                  </div>
+                </div>
+
+                <div className="card-footer-warning">
+                  <i className="fa-solid fa-triangle-exclamation"></i>
+                  <p>{med.precaution}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        )}
 
-              <div className="card-footer-warning">
-                <i className="fa-solid fa-triangle-exclamation"></i>
-                <p>{med.precaution}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {filteredMeds.length === 0 && (
+        {!loading && filteredMeds.length === 0 && (
           <div className="no-results">
             <p>Aucun médicament trouvé pour "{searchTerm}"</p>
           </div>
